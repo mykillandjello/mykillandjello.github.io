@@ -124,6 +124,7 @@ img {vertical-align: middle;}
 <script>
 
 var margin = {top: 200, right: 200, bottom: 200, left: 200};
+
 var width = 1000 - margin.top - margin.bottom;
 var height = 1000 - margin.left - margin.right;
 
@@ -137,38 +138,35 @@ var svg1 = d3.select("#slide1")
 
 d3.csv("constructors.csv", function(data) {
 // X axis: scale and draw:
+
 var x = d3.scaleLinear()
-    .domain([0, d.length])
-    .range([0, 8]);
+    .domain([0, data.length])
+    .range([0, width]);
+
 svg1.append("g")
     .attr("transform", "translate(0," + height + ")")
     .call(d3.axisBottom(x));
 
-// set the parameters for the histogram
-var histogram = d3.histogram()
-    .value(function(d) { return d.titles; })   // I need to give the vector of value
-    .domain(x.domain())  // then the domain of the graphic
-    .thresholds(x.ticks(d.length)); // then the numbers of bins
-
 // And apply this function to data to get the bins
-var bins = histogram(data);
 
 // Y axis: scale and draw:
 var y = d3.scaleLinear()
     .range([height, 0]);
-    y.domain([0, d3.max(bins, function(d) { return d.length; })]);   // d3.hist has to be called before the Y axis obviously
+    y.domain([0, 16]);   // d3.hist has to be called before the Y axis obviously
 svg1.append("g")
     .call(d3.axisLeft(y));
 
+console.log(data)
 // append the bar rectangles to the svg element
 svg1.selectAll("rect")
-    .data(bins)
+    .data(data)
     .enter()
     .append("rect")
-      .attr("x", 1)
-      .attr("transform", function(d) { return "translate(" + x(d.x0) + "," + y(d.length) + ")"; })
-      .attr("width", function(d) { return x(d.x1) - x(d.x0) -1 ; })
-      .attr("height", function(d) { return height - y(d.length); })
+      // .attr("transform", function(d, i) { return "translate(" + x + "," + y + ")"; })
+      .attr("width", 10)
+      .attr("height", function(d, i) { return height - d.titles[i]; })
+      .attr("x",function(d,i){return 10 * i;})
+      .attr("y",function(d,i) {return d.titles[i]})
       .style("fill", "teal")
 
 });
