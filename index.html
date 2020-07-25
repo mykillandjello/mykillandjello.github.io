@@ -143,9 +143,9 @@ var x = d3.scaleLinear()
     .domain([0, data.length])
     .range([0, width]);
 
-svg1.append("g")
-    .attr("transform", "translate(0," + height + ")")
-    .call(d3.axisBottom(x));
+// svg1.append("g")
+//     .attr("transform", "translate(0," + height + ")")
+//     .call(d3.axisBottom(x));
 
 // And apply this function to data to get the bins
 
@@ -156,26 +156,32 @@ var y = d3.scaleLinear()
 svg1.append("g")
     .call(d3.axisLeft(y));
 
-console.log(data)
+var titles = [];
+var constructors = [];
+var nations = [];
+for (i=0; i < data.length; i++) {
+  titles.push(data[i].titles)
+  constructors.push(data[i].constructor)
+  nations.push(data[i].nation)
+}
+
 // append the bar rectangles to the svg element
 svg1.selectAll("rect")
-    .data(data)
-    .enter()
-    .append("rect")
-      // .attr("transform", function(d, i) { return "translate(" + x + "," + y + ")"; })
-      .attr("width", 10)
-      .attr("height", function(d, i) { return height - d.titles[i]; })
-      .attr("x",function(d,i){return 10 * i;})
-      .attr("y",function(d,i) {return d.titles[i]})
-      .style("fill", "teal")
-
+  .data(titles)
+  .enter()
+  .append("rect")
+    .attr("width", 30)
+    .attr("height", function(d){ return height - y(d);})
+    .attr("x",function(d,i){return 35 * i;})
+    .attr("y", function(d) {return y(d)})
+    .style("fill", "teal")
 });
 </script>
 
 <!--Slide 2: Drivers Championships-->
 <script>
-// set the dimensions and margins of the graph
 var margin = {top: 200, right: 200, bottom: 200, left: 200};
+
 var width = 1000 - margin.top - margin.bottom;
 var height = 1000 - margin.left - margin.right;
 
@@ -184,86 +190,66 @@ var svg2 = d3.select("#slide2")
   .append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-    .attr("transform",
-          "translate(" + margin.left + "," + margin.top + ")");
+  .append('g')
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-//read data
-d3.csv("https://raw.githubusercontent.com/zonination/perceptions/master/probly.csv", function(data) {
+d3.csv("drivers.csv", function(data) {
+// X axis: scale and draw:
 
-  // Get the different categories and count them
-  var categories = data.columns
-  var n = categories.length
+var x = d3.scaleLinear()
+    .domain([0, data.length])
+    .range([0, width]);
 
-  // Add X axis
-  var x = d3.scaleLinear()
-    .domain([-10, 140])
-    .range([ 0, width ]);
-  svg2.append("g")
-    .attr("transform", "translate(0," + height + ")")
-    .call(d3.axisBottom(x));
+// svg1.append("g")
+//     .attr("transform", "translate(0," + height + ")")
+//     .call(d3.axisBottom(x));
 
-  // Create a Y scale for densities
-  var y = d3.scaleLinear()
-    .domain([0, 0.4])
-    .range([ height, 0]);
 
-  // Create the Y axis for names
-  var yName = d3.scaleBand()
-    .domain(categories)
-    .range([0, height])
-    .paddingInner(1)
-  svg2.append("g")
-    .call(d3.axisLeft(yName));
+// Y axis: scale and draw:
+var y2 = d3.scaleLinear()
+    .range([height, 0]);
+    y2.domain([0, 7]);   // d3.hist has to be called before the Y axis
 
-  // Compute kernel density estimation for each column:
-  var kde = kernelDensityEstimator(kernelEpanechnikov(7), x.ticks(40)) // increase this 40 for more accurate density.
-  var allDensity = []
-  for (i = 0; i < n; i++) {
-      key = categories[i]
-      density = kde( data.map(function(d){  return d[key]; }) )
-      allDensity.push({key: key, density: density})
-  }
+svg2.append("g")
+    .call(d3.axisLeft(y2));
 
-  // Add areas
-  svg2.selectAll("areas")
-    .data(allDensity)
-    .enter()
-    .append("path")
-      .attr("transform", function(d){return("translate(0," + (yName(d.key)-height) +")" )})
-      .datum(function(d){return(d.density)})
-      .attr("fill", "#69b3a2")
-      .attr("stroke", "#000")
-      .attr("stroke-width", 1)
-      .attr("d",  d3.line()
-          .curve(d3.curveBasis)
-          .x(function(d) { return x(d[0]); })
-          .y(function(d) { return y(d[1]); })
-      )
-
-})
-
-// This is what I need to compute kernel density estimation
-function kernelDensityEstimator(kernel, X) {
-  return function(V) {
-    return X.map(function(x) {
-      return [x, d3.mean(V, function(v) { return kernel(x - v); })];
-    });
-  };
-}
-function kernelEpanechnikov(k) {
-  return function(v) {
-    return Math.abs(v /= k) <= 1 ? 0.75 * (1 - v * v) / k : 0;
-  };
+var titles = [];
+var drivers = [];
+var nations = [];
+for (i=0; i < data.length; i++) {
+  titles.push(data[i].titles)
+  drivers.push(data[i].driver)
+  nations.push(data[i].nation)
 }
 
+// append the bar rectangles to the svg element
+svg2.selectAll("rect")
+  .data(titles)
+  .enter()
+  .append("rect")
+    .attr("width", 19)
+    .attr("height", function(d){ return height - y2(d);})
+    .attr("x",function(d,i){return 20 * i;})
+    .attr("y", function(d) {return y2(d)})
+    .style("fill", "teal")
+});
 </script>
 
 <script>
+d3.csv("constructors.csv", function(data) {
+
+my_dict = {};
+for(var i = 0; i < data.length; ++i) {
+    if(!my_dict[data[i].nation])
+        my_dict[data[i].nation] = 0;
+    ++my_dict[data[i]];
+}
+
+console.log(my_dict)
   // set the dimensions and margins of the graph
-var width = 450
-    height = 450
-    margin = 40
+var width = 700
+    height = 700
+    margin = 200
 
 // The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
 var radius = Math.min(width, height) / 2 - margin
@@ -277,17 +263,17 @@ var svg3 = d3.select("#slide3")
     .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
 // Create dummy data
-var data = {a: 9, b: 20, c:30, d:8, e:12}
+// var data = {a: 9, b: 20, c:30, d:8, e:12}
 
 // set the color scale
 var color = d3.scaleOrdinal()
-  .domain(data)
+  .domain(my_dict)
   .range(d3.schemeSet2);
 
 // Compute the position of each group on the pie:
 var pie = d3.pie()
   .value(function(d) {return d.value; })
-var data_ready = pie(d3.entries(data))
+var data_ready = pie(d3.entries(my_dict))
 // Now I know that group A goes from 0 degrees to x degrees and so on.
 
 // shape helper to build arcs:
