@@ -236,19 +236,19 @@ svg2.selectAll("rect")
 </script>
 
 <script>
-d3.csv("constructors.csv", function(data) {
+d3.csv("drivers.csv", function(data) {
 
 my_dict = {};
 for(var i = 0; i < data.length; ++i) {
     if(!my_dict[data[i].nation])
         my_dict[data[i].nation] = 0;
-    ++my_dict[data[i]];
+    ++my_dict[data[i].nation];
 }
 
 console.log(my_dict)
   // set the dimensions and margins of the graph
-var width = 700
-    height = 700
+var width = 900
+    height = 900
     margin = 200
 
 // The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
@@ -299,7 +299,7 @@ svg3
   .data(data_ready)
   .enter()
   .append('text')
-  .text(function(d){ return "grp " + d.data.key})
+  .text(function(d){ return d.data.key})
   .attr("transform", function(d) { return "translate(" + arcGenerator.centroid(d) + ")";  })
   .style("text-anchor", "middle")
   .style("font-size", 17)
