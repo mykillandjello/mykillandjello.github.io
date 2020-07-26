@@ -366,22 +366,22 @@ for (i=0; i < data.length; i++) {
 //     .domain([0, drivers.length])
 //     .range([0, width]);
 
-var y2 = d3.scaleBand()
+var y3 = d3.scaleBand()
   .domain(d3.range(drivers.length))
   .range([0,height])
   .padding(0.1)
 
 svg3.append("g")
-    .call(d3.axisLeft(y2).tickFormat(i => drivers[i]));
+    .call(d3.axisLeft(y3).tickFormat(i => drivers[i]));
 
 // Y axis: scale and draw:
-var x2 = d3.scaleLinear()
+var x3 = d3.scaleLinear()
     .range([0, width])
     .domain([0, 7]);
 
 svg3.append("g")
     .attr("transform", "translate(0," + height + ")")
-    .call(d3.axisBottom(x2).ticks(7));
+    .call(d3.axisBottom(x3).ticks(7));
 
 svg3.append("text")             
   .attr("transform",
@@ -396,18 +396,52 @@ svg3.append("text")
     .attr("x",0 - (height / 2))
     .attr("dy", "1em")
     .style("text-anchor", "middle")
-    .text("Driver Name"); 
+    .text("Driver Name");
+
+var tooltip3 = d3.select("#slide3")
+    .append("div")
+      .style("opacity", 0)
+      .attr("class", "tooltip")
+      .style("background-color", "black")
+      .style("border-radius", "5px")
+      .style("padding", "10px")
+      .style("color", "white")
+
+var showTooltip3 = function(d, i) {
+    tooltip3
+      .transition()
+      .duration(200)
+    tooltip3
+      .style("opacity", 1)
+      .html("Country: " + nations[i])
+      .style("left", (d3.mouse(this)[0]+30) + "px")
+      .style("top", (d3.mouse(this)[1]+30) + "px")
+  }
+  var moveTooltip3 = function(d) {
+    tooltip3
+      .style("left", (d3.mouse(this)[0]+30) + "px")
+      .style("top", (d3.mouse(this)[1]+30) + "px")
+  }
+  var hideTooltip3 = function(d) {
+    tooltip3
+      .transition()
+      .duration(200)
+      .style("opacity", 0)
+  }
 
 // append the bar rectangles to the svg element
 svg3.selectAll("rect")
   .data(titles)
   .enter()
   .append("rect")
-    .attr("height", y2.bandwidth())
-    .attr("width", function(d){ return x2(d);})
-    .attr("y",(d, i) => y2(i))
-    .attr("x", (d, i) => function(d){ return x2(d)})
+    .attr("height", y3.bandwidth())
+    .attr("width", function(d){ return x3(d);})
+    .attr("y",(d, i) => y3(i))
+    .attr("x", (d) => function(d){ return x3(d)})
     .style("fill", function(d,i) {return countryColors[nations[i]]})
+  .on("mouseover", showTooltip3 )
+  .on("mousemove", moveTooltip3 )
+  .on("mouseleave", hideTooltip3 )
 });
 
 </script>
