@@ -108,14 +108,21 @@ img {vertical-align: middle;}
 </div>
 
 <div id="slide2" class="mySlides fade">
+  <h1 style=color:black>Constructors Championships by Nation</h1>
+  <!-- <div class="numbertext">3 / 3</div> -->
+  <!-- <img src="https://www.formula1.com/content/dam/fom-website/manual/Misc/2021-Master-Folder/f1%202021%20-%2004%2010%202019%20-%20render%2002.jpg" style="width:100%"> -->
+  <!-- <div class="text">Caption Three</div> -->
+</div>
+
+<div id="slide3" class="mySlides fade">
   <h1 style=color:black>Driver's Championships</h1>
   <!-- <div class="numbertext">2 / 3</div> -->
   <!-- <img src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/charles-leclerc-of-monaco-driving-the-scuderia-ferrari-news-photo-1595532287.jpg?crop=0.856xw:0.855xh;0,0.145xh&resize=480:*" style="width:100%"> -->
   <!-- <div class="text">Caption Two</div> -->
 </div>
 
-<div id="slide3" class="mySlides fade">
-  <h1 style=color:black>Proportion of All Championships</h1>
+<div id="slide4" class="mySlides fade">
+  <h1 style=color:black>Driver's Championships by Nation</h1>
   <!-- <div class="numbertext">3 / 3</div> -->
   <!-- <img src="https://www.formula1.com/content/dam/fom-website/manual/Misc/2021-Master-Folder/f1%202021%20-%2004%2010%202019%20-%20render%2002.jpg" style="width:100%"> -->
   <!-- <div class="text">Caption Three</div> -->
@@ -124,8 +131,23 @@ img {vertical-align: middle;}
 <!-- Slide 1: Constructors championships-->
 <script>
 
-var margin = {top: 200, right: 200, bottom: 200, left: 200};
+var countryColors = {
+    "Italy": "red",
+    "Germany": "teal",
+    "United Kingdom": "blue",
+    "France": "green",
+    "Austria": "orange",
+    "South Africa": "pink",
+    "Australia": "purple",
+    "Brazil": "greenyellow",
+    "Argentina": "coral",
+    "Canada": "firebrick",
+    "Spain": "sandybrown",
+    "Finland": "silver",
+    "USA": "cornflowerblue"
+  };
 
+var margin = {top: 200, right: 200, bottom: 200, left: 200};
 var width = 1000 - margin.top - margin.bottom;
 var height = 1000 - margin.left - margin.right;
 
@@ -148,10 +170,6 @@ for (i=0; i < data.length; i++) {
   nations.push(data[i].nation)
 }
 
-// var x = d3.scaleLinear()
-//     .domain([0, constructors.length])
-//     .range([0, width]);
-
 var x1 = d3.scaleBand()
   .domain(d3.range(constructors.length))
   .range([0,width])
@@ -160,6 +178,12 @@ var x1 = d3.scaleBand()
 svg1.append("g")
     .attr("transform", "translate(0," + height + ")")
     .call(d3.axisBottom(x1).tickFormat(i => constructors[i]));
+
+svg1.append("text")             
+  .attr("transform",
+        "translate(" + (width/2) + " ," + (height + 40) + ")")
+  .style("text-anchor", "middle")
+  .text("Constructor Name");
 
 // And apply this function to data to get the bins
 
@@ -171,7 +195,46 @@ var y1 = d3.scaleLinear()
 svg1.append("g")
     .call(d3.axisLeft(y1));
 
+svg1.append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("y", 0 - margin.left + 150)
+    .attr("x",0 - (height / 2))
+    .attr("dy", "1em")
+    .style("text-anchor", "middle")
+    .text("Championship Wins"); 
+
 // var colors = ["red", "blue", "orange", "#124712", "teal", "#483D8B", "black", "purple", "yellow", "green", "#87cefa", "#8A2BE2", "#00008B", "#9ACD32", "white"]
+
+var tooltip1 = d3.select("#slide1")
+    .append("div")
+      .style("opacity", 0)
+      .attr("class", "tooltip")
+      .style("background-color", "black")
+      .style("border-radius", "5px")
+      .style("padding", "10px")
+      .style("color", "white")
+
+var showTooltip1 = function(d, i) {
+    tooltip1
+      .transition()
+      .duration(200)
+    tooltip1
+      .style("opacity", 1)
+      .html("Country: " + nations[i])
+      .style("left", (d3.mouse(this)[0]+30) + "px")
+      .style("top", (d3.mouse(this)[1]+30) + "px")
+  }
+  var moveTooltip1 = function(d) {
+    tooltip1
+      .style("left", (d3.mouse(this)[0]+30) + "px")
+      .style("top", (d3.mouse(this)[1]+30) + "px")
+  }
+  var hideTooltip1 = function(d) {
+    tooltip1
+      .transition()
+      .duration(200)
+      .style("opacity", 0)
+  }
 
 // append the bar rectangles to the svg element
 svg1.selectAll("rect")
@@ -182,19 +245,106 @@ svg1.selectAll("rect")
     .attr("height", function(d){ return height - y1(d);})
     .attr("x",(d, i) => x1(i))
     .attr("y", function(d) {return y1(d)})
-    .style("fill", "red")
+    .style("fill", function(d,i) {return countryColors[nations[i]]})
+    .on("mouseover", showTooltip1 )
+    .on("mousemove", moveTooltip1 )
+    .on("mouseleave", hideTooltip1 )
+
+// color legend
+svg1.append("circle").attr("cx",500).attr("cy",30).attr("r", 10).style("fill", "red")
+svg1.append("circle").attr("cx",500).attr("cy",60).attr("r", 10).style("fill", "blue")
+svg1.append("circle").attr("cx",500).attr("cy",90).attr("r", 10).style("fill", "teal")
+svg1.append("circle").attr("cx",500).attr("cy",120).attr("r", 10).style("fill", "orange")
+svg1.append("circle").attr("cx",500).attr("cy",150).attr("r", 10).style("fill", "green")
+svg1.append("text").attr("x", 520).attr("y", 30).text("Italy").style("font-size", "15px").attr("alignment-baseline","middle")
+svg1.append("text").attr("x", 520).attr("y", 60).text("United Kingdom").style("font-size", "15px").attr("alignment-baseline","middle")
+svg1.append("text").attr("x", 520).attr("y", 90).text("Germany").style("font-size", "15px").attr("alignment-baseline","middle")
+svg1.append("text").attr("x", 520).attr("y", 120).text("Austria").style("font-size", "15px").attr("alignment-baseline","middle")
+svg1.append("text").attr("x", 520).attr("y", 150).text("France").style("font-size", "15px").attr("alignment-baseline","middle")
+
 });
 </script>
 
-<!--Slide 2: Drivers Championships-->
+<!--Slide 2: Constructors championships by nation-->
 <script>
-var margin = {top: 150, right: 150, bottom: 150, left: 150};
+  d3.csv("constructors.csv", function(data) {
+  
+  my_dict = {};
+  for(var i = 0; i < data.length; ++i) {
+      if(!my_dict[data[i].nation])
+          my_dict[data[i].nation] = 0;
+      ++my_dict[data[i].nation];
+  }
+  
+    // set the dimensions and margins of the graph
+  var width = 1000
+      height = 1000
+      margin = 200
+  
+  // The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
+  var radius = Math.min(width, height) / 2 - margin
+  
+  // append the svg object to the div called 'my_dataviz'
+  var svg2 = d3.select("#slide2")
+    .append("svg")
+      .attr("width", width)
+      .attr("height", height)
+    .append("g")
+      .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+  
+  // Create dummy data
+  // var data = {a: 9, b: 20, c:30, d:8, e:12}
+  
+  // set the color scale
+  var color = d3.scaleOrdinal()
+    .domain(my_dict)
+    .range(d3.schemeSet2);
+  
+  // Compute the position of each group on the pie:
+  var pie = d3.pie()
+    .value(function(d) { return d.value; })
+  var data_ready = pie(d3.entries(my_dict))
+  // Now I know that group A goes from 0 degrees to x degrees and so on.
+  
+  // shape helper to build arcs:
+  var arcGenerator = d3.arc()
+    .innerRadius(radius - 150)
+    .outerRadius(radius)
+  
+  // Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
+  svg2
+    .selectAll('mySlices')
+    .data(data_ready)
+    .enter()
+    .append('path')
+      .attr('d', arcGenerator)
+      .attr('fill', function(d){ return(color(d.data.key)) })
+      .attr("stroke", "black")
+      .style("stroke-width", "2px")
+      .style("opacity", 0.7)
+  
+  // Now add the annotation. Use the centroid method to get the best coordinates
+  svg2
+    .selectAll('mySlices')
+    .data(data_ready)
+    .enter()
+    .append('text')
+    .text(function(d){ return d.data.key})
+    .attr("transform", function(d) { return "translate(" + arcGenerator.centroid(d) + ")";  })
+    .style("text-anchor", "middle")
+    .style("font-size", 17)
+  });
+  </script>
+
+<!--Slide 3: Drivers Championships-->
+<script>
+var margin = {top: 200, right: 200, bottom: 200, left: 200};
 
 var width = 1000 - margin.top - margin.bottom;
 var height = 1000 - margin.left - margin.right;
 
 // append the svg object to the body of the page
-var svg2 = d3.select("#slide2")
+var svg3 = d3.select("#slide3")
   .append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
@@ -221,7 +371,7 @@ var y2 = d3.scaleBand()
   .range([0,height])
   .padding(0.1)
 
-svg2.append("g")
+svg3.append("g")
     .call(d3.axisLeft(y2).tickFormat(i => drivers[i]));
 
 // Y axis: scale and draw:
@@ -229,12 +379,27 @@ var x2 = d3.scaleLinear()
     .range([0, width])
     .domain([0, 7]);
 
-svg2.append("g")
+svg3.append("g")
     .attr("transform", "translate(0," + height + ")")
     .call(d3.axisBottom(x2).ticks(7));
 
+svg3.append("text")             
+  .attr("transform",
+        "translate(" + (width/2) + " ," + (height + 40) + ")")
+  .style("text-anchor", "middle")
+  .text("Championship Wins");
+
+
+svg3.append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("y", 0 - margin.left + 75)
+    .attr("x",0 - (height / 2))
+    .attr("dy", "1em")
+    .style("text-anchor", "middle")
+    .text("Driver Name"); 
+
 // append the bar rectangles to the svg element
-svg2.selectAll("rect")
+svg3.selectAll("rect")
   .data(titles)
   .enter()
   .append("rect")
@@ -242,80 +407,81 @@ svg2.selectAll("rect")
     .attr("width", function(d){ return x2(d);})
     .attr("y",(d, i) => y2(i))
     .attr("x", (d, i) => function(d){ return x2(d)})
-    .style("fill", "red")
+    .style("fill", function(d,i) {return countryColors[nations[i]]})
 });
+
 </script>
 
 <script>
-d3.csv("drivers.csv", function(data) {
-
-my_dict = {};
-for(var i = 0; i < data.length; ++i) {
-    if(!my_dict[data[i].nation])
-        my_dict[data[i].nation] = 0;
-    ++my_dict[data[i].nation];
-}
-
-console.log(my_dict)
-  // set the dimensions and margins of the graph
-var width = 900
-    height = 900
-    margin = 200
-
-// The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
-var radius = Math.min(width, height) / 2 - margin
-
-// append the svg object to the div called 'my_dataviz'
-var svg3 = d3.select("#slide3")
-  .append("svg")
-    .attr("width", width)
-    .attr("height", height)
-  .append("g")
-    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-
-// Create dummy data
-// var data = {a: 9, b: 20, c:30, d:8, e:12}
-
-// set the color scale
-var color = d3.scaleOrdinal()
-  .domain(my_dict)
-  .range(d3.schemeSet2);
-
-// Compute the position of each group on the pie:
-var pie = d3.pie()
-  .value(function(d) { return d.value; })
-var data_ready = pie(d3.entries(my_dict))
-// Now I know that group A goes from 0 degrees to x degrees and so on.
-
-// shape helper to build arcs:
-var arcGenerator = d3.arc()
-  .innerRadius(0)
-  .outerRadius(radius)
-
-// Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
-svg3
-  .selectAll('mySlices')
-  .data(data_ready)
-  .enter()
-  .append('path')
-    .attr('d', arcGenerator)
-    .attr('fill', function(d){ return(color(d.data.key)) })
-    .attr("stroke", "black")
-    .style("stroke-width", "2px")
-    .style("opacity", 0.7)
-
-// Now add the annotation. Use the centroid method to get the best coordinates
-svg3
-  .selectAll('mySlices')
-  .data(data_ready)
-  .enter()
-  .append('text')
-  .text(function(d){ return d.data.key})
-  .attr("transform", function(d) { return "translate(" + arcGenerator.centroid(d) + ")";  })
-  .style("text-anchor", "middle")
-  .style("font-size", 17)
-});
-</script>
+  d3.csv("drivers.csv", function(data) {
+  
+  my_dict = {};
+  for(var i = 0; i < data.length; ++i) {
+      if(!my_dict[data[i].nation])
+          my_dict[data[i].nation] = 0;
+      ++my_dict[data[i].nation];
+  }
+  
+  console.log(my_dict)
+    // set the dimensions and margins of the graph
+    var width = 1000
+      height = 1000
+      margin = 200
+  
+  // The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
+  var radius = Math.min(width, height) / 2 - margin
+  
+  // append the svg object to the div called 'my_dataviz'
+  var svg4 = d3.select("#slide4")
+    .append("svg")
+      .attr("width", width)
+      .attr("height", height)
+    .append("g")
+      .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+  
+  // Create dummy data
+  // var data = {a: 9, b: 20, c:30, d:8, e:12}
+  
+  // set the color scale
+  var color = d3.scaleOrdinal()
+    .domain(my_dict)
+    .range(d3.schemeSet2);
+  
+  // Compute the position of each group on the pie:
+  var pie = d3.pie()
+    .value(function(d) { return d.value; })
+  var data_ready = pie(d3.entries(my_dict))
+  // Now I know that group A goes from 0 degrees to x degrees and so on.
+  
+  // shape helper to build arcs:
+  var arcGenerator = d3.arc()
+    .innerRadius(radius - 150)
+    .outerRadius(radius)
+  
+  // Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
+  svg4
+    .selectAll('mySlices')
+    .data(data_ready)
+    .enter()
+    .append('path')
+      .attr('d', arcGenerator)
+      .attr('fill', function(d){ return(color(d.data.key)) })
+      .attr("stroke", "black")
+      .style("stroke-width", "2px")
+      .style("opacity", 0.7)
+  
+  // Now add the annotation. Use the centroid method to get the best coordinates
+  svg4
+    .selectAll('mySlices')
+    .data(data_ready)
+    .enter()
+    .append('text')
+    .text(function(d){ return d.data.key})
+    .attr("transform", function(d) { return "translate(" + arcGenerator.centroid(d) + ")";  })
+    .style("text-anchor", "middle")
+    .style("font-size", 17)
+  });
+  </script>
 
 <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
 <a class="next" onclick="plusSlides(1)">&#10095;</a>
