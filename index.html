@@ -102,30 +102,62 @@ img {vertical-align: middle;}
 
 <div id="slide1" class="mySlides fade">
   <h1 style=color:black>Constructors Championships</h1>
-  <!-- <div class="numbertext">1 / 3</div> -->
-  <!-- <img src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/racing-points-mexican-driver-sergio-perez-steers-his-car-in-news-photo-1595360910.jpg?crop=0.938xw:0.792xh;0.0294xw,0.203xh&resize=480:*" style="width:100%"> -->
-  <!-- <div class="text">Caption Text</div> -->
+  <p style=color:black>A paragraph is a series of sentences that are organized and coherent,
+    and are all related to a single topic. Almost every piece of writing you do that is longer
+    than a few sentences should be organized into paragraphs. This is because paragraphs show
+    a reader where the subdivisions of an essay begin and end, and thus help the reader see
+    the organization of the essay and grasp its main points.
+    Paragraphs can contain many different kinds of information. A paragraph could contain a 
+    series of brief examples or a single long illustration of a general point. It might describe
+    a place, character, or process; narrate a series of events; compare or contrast two or more
+    hings; classify items into categories; or describe causes and effects. Regardless of the
+    kind of information they contain, all paragraphs share certain characteristics. One of the
+    most important of these is a topic sentence.</p>
 </div>
 
 <div id="slide2" class="mySlides fade">
   <h1 style=color:black>Constructors Championships by Nation</h1>
-  <!-- <div class="numbertext">3 / 3</div> -->
-  <!-- <img src="https://www.formula1.com/content/dam/fom-website/manual/Misc/2021-Master-Folder/f1%202021%20-%2004%2010%202019%20-%20render%2002.jpg" style="width:100%"> -->
-  <!-- <div class="text">Caption Three</div> -->
+  <p style=color:black>A paragraph is a series of sentences that are organized and coherent,
+    and are all related to a single topic. Almost every piece of writing you do that is longer
+    than a few sentences should be organized into paragraphs. This is because paragraphs show
+    a reader where the subdivisions of an essay begin and end, and thus help the reader see
+    the organization of the essay and grasp its main points.
+    Paragraphs can contain many different kinds of information. A paragraph could contain a 
+    series of brief examples or a single long illustration of a general point. It might describe
+    a place, character, or process; narrate a series of events; compare or contrast two or more
+    hings; classify items into categories; or describe causes and effects. Regardless of the
+    kind of information they contain, all paragraphs share certain characteristics. One of the
+    most important of these is a topic sentence.</p>
 </div>
 
 <div id="slide3" class="mySlides fade">
   <h1 style=color:black>Driver's Championships</h1>
-  <!-- <div class="numbertext">2 / 3</div> -->
-  <!-- <img src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/charles-leclerc-of-monaco-driving-the-scuderia-ferrari-news-photo-1595532287.jpg?crop=0.856xw:0.855xh;0,0.145xh&resize=480:*" style="width:100%"> -->
-  <!-- <div class="text">Caption Two</div> -->
+  <p style=color:black>A paragraph is a series of sentences that are organized and coherent,
+    and are all related to a single topic. Almost every piece of writing you do that is longer
+    than a few sentences should be organized into paragraphs. This is because paragraphs show
+    a reader where the subdivisions of an essay begin and end, and thus help the reader see
+    the organization of the essay and grasp its main points.
+    Paragraphs can contain many different kinds of information. A paragraph could contain a 
+    series of brief examples or a single long illustration of a general point. It might describe
+    a place, character, or process; narrate a series of events; compare or contrast two or more
+    hings; classify items into categories; or describe causes and effects. Regardless of the
+    kind of information they contain, all paragraphs share certain characteristics. One of the
+    most important of these is a topic sentence.</p>
 </div>
 
 <div id="slide4" class="mySlides fade">
   <h1 style=color:black>Driver's Championships by Nation</h1>
-  <!-- <div class="numbertext">3 / 3</div> -->
-  <!-- <img src="https://www.formula1.com/content/dam/fom-website/manual/Misc/2021-Master-Folder/f1%202021%20-%2004%2010%202019%20-%20render%2002.jpg" style="width:100%"> -->
-  <!-- <div class="text">Caption Three</div> -->
+  <p style=color:black>A paragraph is a series of sentences that are organized and coherent,
+    and are all related to a single topic. Almost every piece of writing you do that is longer
+    than a few sentences should be organized into paragraphs. This is because paragraphs show
+    a reader where the subdivisions of an essay begin and end, and thus help the reader see
+    the organization of the essay and grasp its main points.
+    Paragraphs can contain many different kinds of information. A paragraph could contain a 
+    series of brief examples or a single long illustration of a general point. It might describe
+    a place, character, or process; narrate a series of events; compare or contrast two or more
+    hings; classify items into categories; or describe causes and effects. Regardless of the
+    kind of information they contain, all paragraphs share certain characteristics. One of the
+    most important of these is a topic sentence.</p>
 </div>
 
 <!-- Slide 1: Constructors championships-->
@@ -147,7 +179,7 @@ var countryColors = {
     "USA": "cornflowerblue"
   };
 
-var margin = {top: 200, right: 200, bottom: 200, left: 200};
+var margin = {top: 50, right: 200, bottom: 200, left: 150};
 var width = 1000 - margin.top - margin.bottom;
 var height = 1000 - margin.left - margin.right;
 
@@ -172,7 +204,7 @@ for (i=0; i < data.length; i++) {
 
 var x1 = d3.scaleBand()
   .domain(d3.range(constructors.length))
-  .range([0,width])
+  .range([200,width + 200])
   .padding(0.1)
 
 svg1.append("g")
@@ -181,7 +213,7 @@ svg1.append("g")
 
 svg1.append("text")             
   .attr("transform",
-        "translate(" + (width/2) + " ," + (height + 40) + ")")
+        "translate(" + (width/2 + 200) + " ," + (height + 40) + ")")
   .style("text-anchor", "middle")
   .text("Constructor Name");
 
@@ -193,17 +225,16 @@ var y1 = d3.scaleLinear()
     .domain([0, 16]);
 
 svg1.append("g")
+    .attr("transform", "translate(200,0)")
     .call(d3.axisLeft(y1));
 
 svg1.append("text")
     .attr("transform", "rotate(-90)")
-    .attr("y", 0 - margin.left + 150)
+    .attr("y", 150)
     .attr("x",0 - (height / 2))
     .attr("dy", "1em")
     .style("text-anchor", "middle")
     .text("Championship Wins"); 
-
-// var colors = ["red", "blue", "orange", "#124712", "teal", "#483D8B", "black", "purple", "yellow", "green", "#87cefa", "#8A2BE2", "#00008B", "#9ACD32", "white"]
 
 var tooltip1 = d3.select("#slide1")
     .append("div")
@@ -246,21 +277,21 @@ svg1.selectAll("rect")
     .attr("x",(d, i) => x1(i))
     .attr("y", function(d) {return y1(d)})
     .style("fill", function(d,i) {return countryColors[nations[i]]})
-    .on("mouseover", showTooltip1 )
-    .on("mousemove", moveTooltip1 )
-    .on("mouseleave", hideTooltip1 )
+  .on("mouseover", showTooltip1 )
+  .on("mousemove", moveTooltip1 )
+  .on("mouseleave", hideTooltip1 )
 
 // color legend
-svg1.append("circle").attr("cx",500).attr("cy",30).attr("r", 10).style("fill", "red")
-svg1.append("circle").attr("cx",500).attr("cy",60).attr("r", 10).style("fill", "blue")
-svg1.append("circle").attr("cx",500).attr("cy",90).attr("r", 10).style("fill", "teal")
-svg1.append("circle").attr("cx",500).attr("cy",120).attr("r", 10).style("fill", "orange")
-svg1.append("circle").attr("cx",500).attr("cy",150).attr("r", 10).style("fill", "green")
-svg1.append("text").attr("x", 520).attr("y", 30).text("Italy").style("font-size", "15px").attr("alignment-baseline","middle")
-svg1.append("text").attr("x", 520).attr("y", 60).text("United Kingdom").style("font-size", "15px").attr("alignment-baseline","middle")
-svg1.append("text").attr("x", 520).attr("y", 90).text("Germany").style("font-size", "15px").attr("alignment-baseline","middle")
-svg1.append("text").attr("x", 520).attr("y", 120).text("Austria").style("font-size", "15px").attr("alignment-baseline","middle")
-svg1.append("text").attr("x", 520).attr("y", 150).text("France").style("font-size", "15px").attr("alignment-baseline","middle")
+svg1.append("circle").attr("cx",800).attr("cy",30).attr("r", 10).style("fill", "red")
+svg1.append("circle").attr("cx",800).attr("cy",60).attr("r", 10).style("fill", "blue")
+svg1.append("circle").attr("cx",800).attr("cy",90).attr("r", 10).style("fill", "teal")
+svg1.append("circle").attr("cx",800).attr("cy",120).attr("r", 10).style("fill", "orange")
+svg1.append("circle").attr("cx",800).attr("cy",150).attr("r", 10).style("fill", "green")
+svg1.append("text").attr("x", 820).attr("y", 30).text("Italy").style("font-size", "15px").attr("alignment-baseline","middle")
+svg1.append("text").attr("x", 820).attr("y", 60).text("United Kingdom").style("font-size", "15px").attr("alignment-baseline","middle")
+svg1.append("text").attr("x", 820).attr("y", 90).text("Germany").style("font-size", "15px").attr("alignment-baseline","middle")
+svg1.append("text").attr("x", 820).attr("y", 120).text("Austria").style("font-size", "15px").attr("alignment-baseline","middle")
+svg1.append("text").attr("x", 820).attr("y", 150).text("France").style("font-size", "15px").attr("alignment-baseline","middle")
 
 });
 </script>
@@ -290,15 +321,12 @@ svg1.append("text").attr("x", 520).attr("y", 150).text("France").style("font-siz
       .attr("width", width)
       .attr("height", height)
     .append("g")
-      .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-  
-  // Create dummy data
-  // var data = {a: 9, b: 20, c:30, d:8, e:12}
+      .attr("transform", "translate(" + width / 2 + "," + 350 + ")");
   
   // set the color scale
   var color = d3.scaleOrdinal()
     .domain(my_dict)
-    .range(d3.schemeSet2);
+    .range(["red", "blue", "teal", "orange", "green"]);
   
   // Compute the position of each group on the pie:
   var pie = d3.pie()
@@ -310,6 +338,37 @@ svg1.append("text").attr("x", 520).attr("y", 150).text("France").style("font-siz
   var arcGenerator = d3.arc()
     .innerRadius(radius - 150)
     .outerRadius(radius)
+
+var tooltip2 = d3.select("#slide2")
+    .append("div")
+      .style("opacity", 0)
+      .attr("class", "tooltip")
+      .style("background-color", "black")
+      .style("border-radius", "5px")
+      .style("padding", "10px")
+      .style("color", "white")
+
+var showTooltip2 = function(d, i) {
+    tooltip2
+      .transition()
+      .duration(200)
+    tooltip2
+      .style("opacity", 1)
+      .html("Percentage: ")
+      .style("left", (d3.mouse(this)[0]+30) + "px")
+      .style("top", (d3.mouse(this)[1]+30) + "px")
+  }
+  var moveTooltip2 = function(d) {
+    tooltip2
+      .style("left", (d3.mouse(this)[0]+30) + "px")
+      .style("top", (d3.mouse(this)[1]+30) + "px")
+  }
+  var hideTooltip2 = function(d) {
+    tooltip2
+      .transition()
+      .duration(200)
+      .style("opacity", 0)
+  }
   
   // Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
   svg2
@@ -322,6 +381,9 @@ svg1.append("text").attr("x", 520).attr("y", 150).text("France").style("font-siz
       .attr("stroke", "black")
       .style("stroke-width", "2px")
       .style("opacity", 0.7)
+    .on("mouseover", showTooltip2 )
+    .on("mousemove", moveTooltip2 )
+    .on("mouseleave", hideTooltip2 )
   
   // Now add the annotation. Use the centroid method to get the best coordinates
   svg2
@@ -338,18 +400,18 @@ svg1.append("text").attr("x", 520).attr("y", 150).text("France").style("font-siz
 
 <!--Slide 3: Drivers Championships-->
 <script>
-var margin = {top: 200, right: 200, bottom: 200, left: 200};
 
-var width = 1000 - margin.top - margin.bottom;
-var height = 1000 - margin.left - margin.right;
+var margin3 = {top: 50, right: 250, bottom: 200, left: 200};
+var width3 = 1000 - margin.top - margin.bottom;
+var height3 = 1000 - margin.left - margin.right;
 
 // append the svg object to the body of the page
 var svg3 = d3.select("#slide3")
   .append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
+    .attr("width", width3 + margin3.left + margin3.right)
+    .attr("height", height3 + margin3.top + margin3.bottom)
   .append('g')
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    .attr("transform", "translate(" + margin3.left + "," + margin3.top + ")");
 
 d3.csv("drivers.csv", function(data) {
 
@@ -362,38 +424,35 @@ for (i=0; i < data.length; i++) {
   nations.push(data[i].nation)
 }
 
-// var x2 = d3.scaleLinear()
-//     .domain([0, drivers.length])
-//     .range([0, width]);
-
 var y3 = d3.scaleBand()
   .domain(d3.range(drivers.length))
-  .range([0,height])
+  .range([0,height3])
   .padding(0.1)
 
 svg3.append("g")
+    .attr("transform", "translate(" + 200 + "," + 0 + ")")
     .call(d3.axisLeft(y3).tickFormat(i => drivers[i]));
 
 // Y axis: scale and draw:
 var x3 = d3.scaleLinear()
-    .range([0, width])
+    .range([0, width3])
     .domain([0, 7]);
 
 svg3.append("g")
-    .attr("transform", "translate(0," + height + ")")
+    .attr("transform", "translate(" + 200 + "," + height3 + ")")
     .call(d3.axisBottom(x3).ticks(7));
 
 svg3.append("text")             
   .attr("transform",
-        "translate(" + (width/2) + " ," + (height + 40) + ")")
+        "translate(" + (width3 / 2 + 200) + " ," + (height3 + 40) + ")")
   .style("text-anchor", "middle")
   .text("Championship Wins");
 
 
 svg3.append("text")
     .attr("transform", "rotate(-90)")
-    .attr("y", 0 - margin.left + 75)
-    .attr("x",0 - (height / 2))
+    .attr("y", 85)
+    .attr("x",0 - (height3 / 2))
     .attr("dy", "1em")
     .style("text-anchor", "middle")
     .text("Driver Name");
@@ -434,6 +493,7 @@ svg3.selectAll("rect")
   .data(titles)
   .enter()
   .append("rect")
+  .attr("transform", "translate(" + 200 + "," + 0 + ")")
     .attr("height", y3.bandwidth())
     .attr("width", function(d){ return x3(d);})
     .attr("y",(d, i) => y3(i))
@@ -471,7 +531,7 @@ svg3.selectAll("rect")
       .attr("width", width)
       .attr("height", height)
     .append("g")
-      .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+      .attr("transform", "translate(" + width / 2 + "," + 350 + ")");
   
   // Create dummy data
   // var data = {a: 9, b: 20, c:30, d:8, e:12}
@@ -479,8 +539,8 @@ svg3.selectAll("rect")
   // set the color scale
   var color = d3.scaleOrdinal()
     .domain(my_dict)
-    .range(d3.schemeSet2);
-  
+    .range(["red","blue","teal","orange","green","pink","purple","greenyellow","coral","firebrick","sandybrown","silver","cornflowerblue"]);
+
   // Compute the position of each group on the pie:
   var pie = d3.pie()
     .value(function(d) { return d.value; })
@@ -491,10 +551,39 @@ svg3.selectAll("rect")
   var arcGenerator = d3.arc()
     .innerRadius(radius - 150)
     .outerRadius(radius)
+
+  var tooltip4 = d3.select("#slide4")
+    .append("div")
+      .style("opacity", 0)
+      .attr("class", "tooltip")
+      .style("background-color", "black")
+      .style("border-radius", "5px")
+      .style("padding", "10px")
+      .style("color", "white")
+
+var showTooltip4 = function(d, i) {
+    tooltip4
+      .transition()
+      .duration(200)
+    tooltip4
+      .style("opacity", 1)
+      .html("Percentage: ")
+      .style("left", (d3.mouse(this)[0]+30) + "px")
+      .style("top", (d3.mouse(this)[1]+30) + "px")
+  }
+  var moveTooltip4 = function(d) {
+    tooltip4
+      .style("left", (d3.mouse(this)[0]+30) + "px")
+      .style("top", (d3.mouse(this)[1]+30) + "px")
+  }
+  var hideTooltip4 = function(d) {
+    tooltip4
+      .transition()
+      .duration(200)
+      .style("opacity", 0)
+  }
   
-  // Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
-  svg4
-    .selectAll('mySlices')
+  svg4.selectAll('mySlices')
     .data(data_ready)
     .enter()
     .append('path')
@@ -503,7 +592,10 @@ svg3.selectAll("rect")
       .attr("stroke", "black")
       .style("stroke-width", "2px")
       .style("opacity", 0.7)
-  
+    .on("mouseover", showTooltip4 )
+    .on("mousemove", moveTooltip4 )
+    .on("mouseleave", hideTooltip4 )
+    
   // Now add the annotation. Use the centroid method to get the best coordinates
   svg4
     .selectAll('mySlices')
