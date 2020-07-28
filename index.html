@@ -77,6 +77,46 @@ img {vertical-align: middle;}
   animation-duration: 1.5s;
 }
 
+#tooltip1 {
+  opacity: 0;
+  position: absolute;
+  text-align: center;
+  width: 200px;
+  height: 100px;
+  background: white;
+  border: 0px;
+}
+
+#tooltip2 {
+  opacity: 0;
+  position: absolute;
+  text-align: center;
+  width: 200px;
+  height: 100px;
+  background: white;
+  border: 0px;
+}
+
+#tooltip3 {
+  opacity: 0;
+  position: absolute;
+  text-align: center;
+  width: 200px;
+  height: 100px;
+  background: white;
+  border: 0px;
+}
+
+#tooltip4 {
+  opacity: 0;
+  position: absolute;
+  text-align: center;
+  width: 200px;
+  height: 100px;
+  background: white;
+  border: 0px;
+}
+
 @-webkit-keyframes fade {
   from {opacity: .4} 
   to {opacity: 1}
@@ -102,6 +142,7 @@ img {vertical-align: middle;}
 
 <div id="slide1" class="mySlides fade">
   <h1 style=color:black>Constructors Championships</h1>
+  <div id="tooltip1"></div>
   <p style=color:black>A paragraph is a series of sentences that are organized and coherent,
     and are all related to a single topic. Almost every piece of writing you do that is longer
     than a few sentences should be organized into paragraphs. This is because paragraphs show
@@ -117,6 +158,7 @@ img {vertical-align: middle;}
 
 <div id="slide2" class="mySlides fade">
   <h1 style=color:black>Constructors Championships by Nation</h1>
+  <div id="tooltip2"></div>
   <p style=color:black>A paragraph is a series of sentences that are organized and coherent,
     and are all related to a single topic. Almost every piece of writing you do that is longer
     than a few sentences should be organized into paragraphs. This is because paragraphs show
@@ -132,6 +174,7 @@ img {vertical-align: middle;}
 
 <div id="slide3" class="mySlides fade">
   <h1 style=color:black>Driver's Championships</h1>
+  <div id="tooltip3"></div>
   <p style=color:black>A paragraph is a series of sentences that are organized and coherent,
     and are all related to a single topic. Almost every piece of writing you do that is longer
     than a few sentences should be organized into paragraphs. This is because paragraphs show
@@ -147,6 +190,7 @@ img {vertical-align: middle;}
 
 <div id="slide4" class="mySlides fade">
   <h1 style=color:black>Driver's Championships by Nation</h1>
+  <div id="tooltip4"></div>
   <p style=color:black>A paragraph is a series of sentences that are organized and coherent,
     and are all related to a single topic. Almost every piece of writing you do that is longer
     than a few sentences should be organized into paragraphs. This is because paragraphs show
@@ -236,36 +280,7 @@ svg1.append("text")
     .style("text-anchor", "middle")
     .text("Championship Wins"); 
 
-var tooltip1 = d3.select("#slide1")
-    .append("div")
-      .style("opacity", 0)
-      .attr("class", "tooltip")
-      .style("background-color", "black")
-      .style("border-radius", "5px")
-      .style("padding", "10px")
-      .style("color", "white")
-
-var showTooltip1 = function(d, i) {
-    tooltip1
-      .transition()
-      .duration(200)
-    tooltip1
-      .style("opacity", 1)
-      .html("Country: " + nations[i])
-      .style("left", (d3.mouse(this)[0]+30) + "px")
-      .style("top", (d3.mouse(this)[1]+30) + "px")
-  }
-  var moveTooltip1 = function(d) {
-    tooltip1
-      .style("left", (d3.mouse(this)[0]+30) + "px")
-      .style("top", (d3.mouse(this)[1]+30) + "px")
-  }
-  var hideTooltip1 = function(d) {
-    tooltip1
-      .transition()
-      .duration(200)
-      .style("opacity", 0)
-  }
+var tooltip1 = d3.select("#tooltip1");
 
 // append the bar rectangles to the svg element
 svg1.selectAll("rect")
@@ -277,9 +292,11 @@ svg1.selectAll("rect")
     .attr("x",(d, i) => x1(i))
     .attr("y", function(d) {return y1(d)})
     .style("fill", function(d,i) {return countryColors[nations[i]]})
-  .on("mouseover", showTooltip1 )
-  .on("mousemove", moveTooltip1 )
-  .on("mouseleave", hideTooltip1 )
+  .on("mouseover", function(d,i){tooltip1.style("opacity", 1)
+                                         .style("left", (d3.event.pageX)+"px")
+                                         .style("top", (d3.event.pageY)+"px")
+                                         .html("Country: " + nations[i]);})
+  .on("mouseleave", function() {tooltip1.style("opacity", 0)} )
 
 // color legend
 svg1.append("circle").attr("cx",800).attr("cy",30).attr("r", 10).style("fill", "red")
@@ -338,38 +355,9 @@ svg1.append("text").attr("x", 820).attr("y", 150).text("France").style("font-siz
   var arcGenerator = d3.arc()
     .innerRadius(radius - 150)
     .outerRadius(radius)
-
-var tooltip2 = d3.select("#slide2")
-    .append("div")
-      .style("opacity", 0)
-      .attr("class", "tooltip")
-      .style("background-color", "black")
-      .style("border-radius", "5px")
-      .style("padding", "10px")
-      .style("color", "white")
-
-var showTooltip2 = function(d, i) {
-    tooltip2
-      .transition()
-      .duration(200)
-    tooltip2
-      .style("opacity", 1)
-      .html("Percentage: ")
-      .style("left", (d3.mouse(this)[0]+30) + "px")
-      .style("top", (d3.mouse(this)[1]+30) + "px")
-  }
-  var moveTooltip2 = function(d) {
-    tooltip2
-      .style("left", (d3.mouse(this)[0]+30) + "px")
-      .style("top", (d3.mouse(this)[1]+30) + "px")
-  }
-  var hideTooltip2 = function(d) {
-    tooltip2
-      .transition()
-      .duration(200)
-      .style("opacity", 0)
-  }
   
+  var tooltip2 = d3.select("#tooltip2");
+
   // Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
   svg2
     .selectAll('mySlices')
@@ -380,10 +368,12 @@ var showTooltip2 = function(d, i) {
       .attr('fill', function(d){ return(color(d.data.key)) })
       .attr("stroke", "black")
       .style("stroke-width", "2px")
-      .style("opacity", 0.7)
-    .on("mouseover", showTooltip2 )
-    .on("mousemove", moveTooltip2 )
-    .on("mouseleave", hideTooltip2 )
+      .style("opacity", 1)
+      .on("mouseover", function(d,i){tooltip2.style("opacity", 1)
+                                         .style("left", (d3.event.pageX)+"px")
+                                         .style("top", (d3.event.pageY)+"px")
+                                         .html(d.data.key);})
+      .on("mouseleave", function() {tooltip2.style("opacity", 0)} )
   
   // Now add the annotation. Use the centroid method to get the best coordinates
   svg2
@@ -457,36 +447,7 @@ svg3.append("text")
     .style("text-anchor", "middle")
     .text("Driver Name");
 
-var tooltip3 = d3.select("#slide3")
-    .append("div")
-      .style("opacity", 0)
-      .attr("class", "tooltip")
-      .style("background-color", "black")
-      .style("border-radius", "5px")
-      .style("padding", "10px")
-      .style("color", "white")
-
-var showTooltip3 = function(d, i) {
-    tooltip3
-      .transition()
-      .duration(200)
-    tooltip3
-      .style("opacity", 1)
-      .html("Country: " + nations[i])
-      .style("left", (d3.mouse(this)[0]+30) + "px")
-      .style("top", (d3.mouse(this)[1]+30) + "px")
-  }
-  var moveTooltip3 = function(d) {
-    tooltip3
-      .style("left", (d3.mouse(this)[0]+30) + "px")
-      .style("top", (d3.mouse(this)[1]+30) + "px")
-  }
-  var hideTooltip3 = function(d) {
-    tooltip3
-      .transition()
-      .duration(200)
-      .style("opacity", 0)
-  }
+var tooltip3 = d3.select("#tooltip3");
 
 // append the bar rectangles to the svg element
 svg3.selectAll("rect")
@@ -499,9 +460,11 @@ svg3.selectAll("rect")
     .attr("y",(d, i) => y3(i))
     .attr("x", (d) => function(d){ return x3(d)})
     .style("fill", function(d,i) {return countryColors[nations[i]]})
-  .on("mouseover", showTooltip3 )
-  .on("mousemove", moveTooltip3 )
-  .on("mouseleave", hideTooltip3 )
+    .on("mouseover", function(d,i){tooltip3.style("opacity", 1)
+                                         .style("left", (d3.event.pageX)+"px")
+                                         .style("top", (d3.event.pageY)+"px")
+                                         .html(nations[i]);})
+      .on("mouseleave", function() {tooltip3.style("opacity", 0)} )
 });
 
 </script>
@@ -551,38 +514,9 @@ svg3.selectAll("rect")
   var arcGenerator = d3.arc()
     .innerRadius(radius - 150)
     .outerRadius(radius)
-
-  var tooltip4 = d3.select("#slide4")
-    .append("div")
-      .style("opacity", 0)
-      .attr("class", "tooltip")
-      .style("background-color", "black")
-      .style("border-radius", "5px")
-      .style("padding", "10px")
-      .style("color", "white")
-
-var showTooltip4 = function(d, i) {
-    tooltip4
-      .transition()
-      .duration(200)
-    tooltip4
-      .style("opacity", 1)
-      .html("Percentage: ")
-      .style("left", (d3.mouse(this)[0]+30) + "px")
-      .style("top", (d3.mouse(this)[1]+30) + "px")
-  }
-  var moveTooltip4 = function(d) {
-    tooltip4
-      .style("left", (d3.mouse(this)[0]+30) + "px")
-      .style("top", (d3.mouse(this)[1]+30) + "px")
-  }
-  var hideTooltip4 = function(d) {
-    tooltip4
-      .transition()
-      .duration(200)
-      .style("opacity", 0)
-  }
   
+  var tooltip4 = d3.select("#tooltip4");
+
   svg4.selectAll('mySlices')
     .data(data_ready)
     .enter()
@@ -592,9 +526,11 @@ var showTooltip4 = function(d, i) {
       .attr("stroke", "black")
       .style("stroke-width", "2px")
       .style("opacity", 0.7)
-    .on("mouseover", showTooltip4 )
-    .on("mousemove", moveTooltip4 )
-    .on("mouseleave", hideTooltip4 )
+      .on("mouseover", function(d,i){tooltip4.style("opacity", 1)
+                                         .style("left", (d3.event.pageX)+"px")
+                                         .style("top", (d3.event.pageY)+"px")
+                                         .html(d.data.key);})
+      .on("mouseleave", function() {tooltip4.style("opacity", 0)} )
     
   // Now add the annotation. Use the centroid method to get the best coordinates
   svg4
