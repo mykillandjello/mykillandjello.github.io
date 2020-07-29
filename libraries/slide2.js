@@ -5,8 +5,6 @@ d3.csv("data/constructors.csv", function(data) {
         if(!my_dict[data[i].nation])
             my_dict[data[i].nation] = 0;
         my_dict[data[i].nation] = my_dict[data[i].nation] + data[i].titles;
-        console.log(data[i].nation);
-        console.log(data[i].titles);
         console.log(my_dict[data[i].nation]);
     }
     
