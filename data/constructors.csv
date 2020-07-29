@@ -1,16 +1,16 @@
-constructor,titles,nation,flag
-Ferrari,16,Italy,https://upload.wikimedia.org/wikipedia/en/thumb/0/03/Flag_of_Italy.svg/255px-Flag_of_Italy.svg.png
-Williams,9,United Kingdom,https://upload.wikimedia.org/wikipedia/en/thumb/a/ae/Flag_of_the_United_Kingdom.svg/1200px-Flag_of_the_United_Kingdom.svg.png
-McLaren,8,United Kingdom,https://upload.wikimedia.org/wikipedia/en/thumb/a/ae/Flag_of_the_United_Kingdom.svg/1200px-Flag_of_the_United_Kingdom.svg.png
-Lotus,7,United Kingdom,https://upload.wikimedia.org/wikipedia/en/thumb/a/ae/Flag_of_the_United_Kingdom.svg/1200px-Flag_of_the_United_Kingdom.svg.png
-Mercedes,6,Germany,https://upload.wikimedia.org/wikipedia/en/thumb/b/ba/Flag_of_Germany.svg/220px-Flag_of_Germany.svg.png
-RedBull,4,Austria,https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Flag_of_Austria.svg/255px-Flag_of_Austria.svg.png
-Cooper,2,United Kingdom,https://upload.wikimedia.org/wikipedia/en/thumb/a/ae/Flag_of_the_United_Kingdom.svg/1200px-Flag_of_the_United_Kingdom.svg.png
-Brabham,2,United Kingdom,https://upload.wikimedia.org/wikipedia/en/thumb/a/ae/Flag_of_the_United_Kingdom.svg/1200px-Flag_of_the_United_Kingdom.svg.png
-Renault,2,France,https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Ensign_of_France.svg/250px-Ensign_of_France.svg.png
-Vanwall,1,United Kingdom,https://upload.wikimedia.org/wikipedia/en/thumb/a/ae/Flag_of_the_United_Kingdom.svg/1200px-Flag_of_the_United_Kingdom.svg.png
-BRM,1,United Kingdom,https://upload.wikimedia.org/wikipedia/en/thumb/a/ae/Flag_of_the_United_Kingdom.svg/1200px-Flag_of_the_United_Kingdom.svg.png
-Matra,1,France,https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Ensign_of_France.svg/250px-Ensign_of_France.svg.png
-Tyrrell,1,United Kingdom,https://upload.wikimedia.org/wikipedia/en/thumb/a/ae/Flag_of_the_United_Kingdom.svg/1200px-Flag_of_the_United_Kingdom.svg.png
-Benetton,1,United Kingdom,https://upload.wikimedia.org/wikipedia/en/thumb/a/ae/Flag_of_the_United_Kingdom.svg/1200px-Flag_of_the_United_Kingdom.svg.png
-Brawn,1,United Kingdom,https://upload.wikimedia.org/wikipedia/en/thumb/a/ae/Flag_of_the_United_Kingdom.svg/1200px-Flag_of_the_United_Kingdom.svg.png
+constructor,titles,nation,race_wins,races_started,pole_positions,first_entry
+Ferrari,16,Italy,239,994,221,1950
+Williams,9,United Kingdom,114,723,128,1978
+McLaren,8,United Kingdom,182,866,155,1966
+Lotus,7,United Kingdom,74,489,102,1958
+Mercedes,6,Germany,105,213,115,1954
+RedBull,4,Austria,62,289,62,2005
+Cooper,2,United Kingdom,16,129,11,1950
+Brabham,2,United Kingdom,35,394,40,1962
+Renault,2,France,35,386,51,1977
+Vanwall,1,United Kingdom,9,28,7,1954
+BRM,1,United Kingdom,17,197,11,1951
+Matra,1,France,9,61,4,1967
+Tyrrell,1,United Kingdom,33,463,19,1968
+Benetton,1,United Kingdom,27,260,15,1986
+Brawn,1,United Kingdom,8,17,5,2009

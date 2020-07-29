@@ -31,10 +31,18 @@ d3.csv("data/constructors.csv", function(data) {
 var titles = [];
 var constructors = [];
 var nations = [];
+var race_wins = [];
+var races_started = [];
+var pole_positions = [];
+var first_entry = [];
 for (i=0; i < data.length; i++) {
   titles.push(data[i].titles)
   constructors.push(data[i].constructor)
   nations.push(data[i].nation)
+  race_wins.push(data[i].race_wins)
+  races_started.push(data[i].races_started)
+  pole_positions.push(data[i].pole_positions)
+  first_entry.push(data[i].first_entry)
 }
 
 var x1 = d3.scaleBand()
@@ -83,10 +91,15 @@ svg1.selectAll("rect")
     .attr("x",(d, i) => x1(i))
     .attr("y", function(d) {return y1(d)})
     .style("fill", function(d,i) {return countryColors[nations[i]]})
+  .transition().duration(3000).delay(1000)
   .on("mouseover", function(d,i){tooltip1.style("opacity", 1)
                                          .style("left", (d3.event.pageX)+"px")
                                          .style("top", (d3.event.pageY)+"px")
-                                         .html("Country: " + nations[i]);})
+                                         .html("Country: " + nations[i] +
+                                         "<br>" + "Race Wins: " + race_wins[i] +
+                                         "<br>" + "Races Started: " + races_started[i] + 
+                                         "<br>" + "Pole Positions: " + pole_positions[i] +
+                                         "<br>" + "First Entry: " + first_entry[i]);})
   .on("mouseleave", function() {tooltip1.style("opacity", 0)} )
 
 // color legend
