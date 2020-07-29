@@ -7,7 +7,6 @@ d3.csv("data/drivers.csv", function(data) {
         ++my_dict[data[i].nation];
     }
     
-    console.log(my_dict)
       // set the dimensions and margins of the graph
       var width = 1000
         height = 1000
@@ -22,7 +21,7 @@ d3.csv("data/drivers.csv", function(data) {
         .attr("width", width)
         .attr("height", height)
       .append("g")
-        .attr("transform", "translate(" + width / 2 + "," + 350 + ")");
+        .attr("transform", "translate(" +  window.innerWidth / 2 + "," +  window.innerHeight / 4 + ")");
     
     // Create dummy data
     // var data = {a: 9, b: 20, c:30, d:8, e:12}

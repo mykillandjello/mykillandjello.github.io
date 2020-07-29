@@ -4,8 +4,7 @@ d3.csv("data/constructors.csv", function(data) {
     for(var i = 0; i < data.length; ++i) {
         if(!my_dict[data[i].nation])
             my_dict[data[i].nation] = 0;
-        my_dict[data[i].nation] = my_dict[data[i].nation] + data[i].titles;
-        console.log(my_dict[data[i].nation]);
+        my_dict[data[i].nation] = my_dict[data[i].nation] + parseInt(data[i].titles);
     }
     
       // set the dimensions and margins of the graph
@@ -22,7 +21,7 @@ d3.csv("data/constructors.csv", function(data) {
         .attr("width", width)
         .attr("height", height)
       .append("g")
-        .attr("transform", "translate(" + width / 2 + "," + 350 + ")");
+        .attr("transform", "translate(" + window.innerWidth / 2 + "," + window.innerHeight / 4 + ")");
     
     // set the color scale
     var color = d3.scaleOrdinal()

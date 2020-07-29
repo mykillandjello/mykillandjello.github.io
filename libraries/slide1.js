@@ -24,7 +24,7 @@ var svg1 = d3.select("#slide1")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
   .append('g')
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    .attr("transform", "translate(" +  margin.left + "," + margin.top + ")");
 
 d3.csv("data/constructors.csv", function(data) {
 
