@@ -8,20 +8,20 @@ d3.csv("data/constructors.csv", function(data) {
     }
     
       // set the dimensions and margins of the graph
-    var width = 1000
-        height = 1000
-        margin = 200
+    var width = 600
+        height = 600
+        margin = 100
     
     // The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
     var radius = Math.min(width, height) / 2 - margin
     
     // append the svg object to the div called 'my_dataviz'
-    var svg2 = d3.select("#slide2")
-      .append("svg")
-        .attr("width", width)
-        .attr("height", height)
+    var svg2 = d3.select("#svg2")
+      // .append("svg")
+      //   .attr("width", width)
+      //   .attr("height", height)
       .append("g")
-        .attr("transform", "translate(" + 500 + "," + 350 + ")");
+        .attr("transform", "translate(" + (width / 2 + radius) + "," + height / 2 + ")");
     
     // set the color scale
     var color = d3.scaleOrdinal()
