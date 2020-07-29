@@ -21,7 +21,7 @@ d3.csv("data/constructors.csv", function(data) {
         .attr("width", width)
         .attr("height", height)
       .append("g")
-        .attr("transform", "translate(" + window.innerWidth / 2 + "," + window.innerHeight / 4 + ")");
+        .attr("transform", "translate(" + 500 + "," + 350 + ")");
     
     // set the color scale
     var color = d3.scaleOrdinal()
