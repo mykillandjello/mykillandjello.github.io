@@ -25,9 +25,9 @@ d3.csv("data/constructors.csv", function(data) {
 }
     
       // set the dimensions and margins of the graph
-    var width = 600
-        height = 600
-        margin = 100
+      var width = 700
+      height = 700
+      margin = 50
     
     // The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
     var radius = Math.min(width, height) / 2 - margin
@@ -39,7 +39,7 @@ d3.csv("data/constructors.csv", function(data) {
       //   .attr("height", height)
       .append("g")
         .attr("transform", "translate(" + (width / 2 + radius / 2) + "," + height / 2 + ")");
-    
+        
     // set the color scale
     var color = d3.scaleOrdinal()
       .domain(my_dict)
@@ -55,6 +55,9 @@ d3.csv("data/constructors.csv", function(data) {
     var arcGenerator = d3.arc()
       .innerRadius(radius - 150)
       .outerRadius(radius)
+      .padAngle(.02)
+      .padRadius(100)
+      .cornerRadius(4)
     
     var tooltip2 = d3.select("#tooltip2");
   
@@ -72,22 +75,32 @@ d3.csv("data/constructors.csv", function(data) {
         .on("mouseover", function(d){tooltip2.style("opacity", 1)
                                            .style("left", (d3.event.pageX)+"px")
                                            .style("top", (d3.event.pageY)+"px")
-                                           .html(d.data.key);})
+                                           .html("Country: " + d.data.key);})
         .on("mouseleave", function() {tooltip2.style("opacity", 0)})
     
-    console.log(data_ready)
     // Now add the annotation. Use the centroid method to get the best coordinates
     var total = 0;
-    for (i=0; i < data_ready; i++){
-      total = total + my_dict
+    for (i=0; i < data_ready.length; i++){
+      total = total + data_ready[i].value
     }
-    svg2
-      .selectAll('mySlices')
+
+    svg2.selectAll('mySlices')
       .data(data_ready)
       .enter()
       .append('text')
-      .text(function(d, i){ return parseInt(d.data.value)/5})
+      .text(function(d){ return Math.round(100 * parseInt(d.data.value)  / total) + "%"})
       .attr("transform", function(d) { return "translate(" + arcGenerator.centroid(d) + ")";})
       .style("text-anchor", "middle")
       .style("font-size", 17)
-    });
+
+  svg2.append("circle").attr("cx",375).attr("cy",30).attr("r", 10).style("fill", "red")
+  svg2.append("circle").attr("cx",375).attr("cy",60).attr("r", 10).style("fill", "blue")
+  svg2.append("circle").attr("cx",375).attr("cy",90).attr("r", 10).style("fill", "teal")
+  svg2.append("circle").attr("cx",375).attr("cy",120).attr("r", 10).style("fill", "orange")
+  svg2.append("circle").attr("cx",375).attr("cy",150).attr("r", 10).style("fill", "green")
+  svg2.append("text").attr("x", 400).attr("y", 30).text("Italy").style("font-size", "15px").attr("alignment-baseline","middle")
+  svg2.append("text").attr("x", 400).attr("y", 60).text("United Kingdom").style("font-size", "15px").attr("alignment-baseline","middle")
+  svg2.append("text").attr("x", 400).attr("y", 90).text("Germany").style("font-size", "15px").attr("alignment-baseline","middle")
+  svg2.append("text").attr("x", 400).attr("y", 120).text("Austria").style("font-size", "15px").attr("alignment-baseline","middle")
+  svg2.append("text").attr("x", 400).attr("y", 150).text("France").style("font-size", "15px").attr("alignment-baseline","middle")
+  });

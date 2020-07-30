@@ -8,9 +8,9 @@ d3.csv("data/drivers.csv", function(data) {
     }
     
       // set the dimensions and margins of the graph
-      var width = 600
-      height = 600
-      margin = 100
+      var width = 700
+      height = 700
+      margin = 50
     
     // The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
     var radius = Math.min(width, height) / 2 - margin
@@ -41,6 +41,9 @@ d3.csv("data/drivers.csv", function(data) {
     var arcGenerator = d3.arc()
       .innerRadius(radius - 150)
       .outerRadius(radius)
+      .padAngle(.02)
+      .padRadius(100)
+      .cornerRadius(4)
     
     var tooltip4 = d3.select("#tooltip4");
   
@@ -58,6 +61,11 @@ d3.csv("data/drivers.csv", function(data) {
                                            .style("top", (d3.event.pageY)+"px")
                                            .html(d.data.key);})
         .on("mouseleave", function() {tooltip4.style("opacity", 0)} )
+
+    var total = 0;
+    for (i=0; i < data_ready.length; i++){
+      total = total + data_ready[i].value
+    }
       
     // Now add the annotation. Use the centroid method to get the best coordinates
     svg4
@@ -65,7 +73,7 @@ d3.csv("data/drivers.csv", function(data) {
       .data(data_ready)
       .enter()
       .append('text')
-      .text(function(d){ return d.data.key})
+      .text(function(d){ return Math.round(100 * parseInt(d.data.value)  / total) + "%"})
       .attr("transform", function(d) { return "translate(" + arcGenerator.centroid(d) + ")";  })
       .style("text-anchor", "middle")
       .style("font-size", 17)

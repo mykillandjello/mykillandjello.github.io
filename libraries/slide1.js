@@ -14,7 +14,7 @@ var countryColors = {
     "USA": "cornflowerblue"
   };
 
-var margin = {top: 50, right: 200, bottom: 200, left: 200};
+var margin = {top: 50, right: 100, bottom: 100, left: 100};
 var width = 1000 - margin.top - margin.bottom;
 var height = 800 - margin.left - margin.right;
 
