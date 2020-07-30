@@ -62,10 +62,36 @@ svg1.append("text")
 
 // And apply this function to data to get the bins
 
+function isMatch(val1){
+  var return_val = 0;
+  if(val1 === "United Kingdom"){
+    return_val = 1;
+  }
+  return return_val;
+};
+
 // Y axis: scale and draw:
 var y1 = d3.scaleLinear()
     .range([height, 0])
     .domain([0, 16]);
+
+svg1.selectAll("rect")
+    .data(titles)
+    .enter()
+    .append("line")
+    .style("stroke", "black")
+    .style("stroke-dasharray", ("3, 3"))
+    .style("stroke-width", function(d,i) {return isMatch(nations[i])})
+    .attr("x1", (d, i) => x1(i) + x1.bandwidth() / 2)
+    .attr("y1", (d, i) => y1(d))
+    .attr("x2", 400)
+    .attr("y2", 200);
+
+svg1.append("text")
+  .attr("x",400)
+  .attr("y",190)
+  .style("text-anchor", "middle")
+  .html("British constructors have 33 championship titles")
 
 svg1.append("g")
     .attr("transform", "translate(50,0)")
@@ -99,7 +125,15 @@ svg1.selectAll("rect")
                                          "<br>" + "Race Starts: " + race_starts[i] + 
                                          "<br>" + "Pole Positions: " + pole_positions[i] +
                                          "<br>" + "First Entry: " + first_entry[i]);})
-  .on("mouseleave", function() {tooltip1.style("opacity", 0)} )
+  .on("mouseleave", function() {tooltip1.style("opacity", 0)} );
+
+// svg1.append('line')
+// .style("stroke", "black")
+// .style("stroke-width", 10)
+// .attr("x1", 0)
+// .attr("y1", 0)
+// .attr("x2", 200)
+// .attr("y2", 200); 
 
 // color legend
   svg1.append("circle").attr("cx",650).attr("cy",30).attr("r", 10).style("fill", "red")
