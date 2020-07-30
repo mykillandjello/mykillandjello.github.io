@@ -1,6 +1,6 @@
 var margin3 = {top: 50, right: 200, bottom: 200, left: 200};
 var width3 = 1000 - margin.top - margin.bottom;
-var height3 = 1000 - margin.left - margin.right;
+var height3 = 800 - margin.left - margin.right;
 
 // append the svg object to the body of the page
 var svg3 = d3.select("#svg3")
