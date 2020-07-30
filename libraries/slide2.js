@@ -75,14 +75,18 @@ d3.csv("data/constructors.csv", function(data) {
                                            .html(d.data.key);})
         .on("mouseleave", function() {tooltip2.style("opacity", 0)})
     
-    // Now add the annotation. Use the centroid method to get the best coordinates
     console.log(data_ready)
+    // Now add the annotation. Use the centroid method to get the best coordinates
+    var total = 0;
+    for (i=0; i < data_ready; i++){
+      total = total + my_dict
+    }
     svg2
       .selectAll('mySlices')
       .data(data_ready)
       .enter()
       .append('text')
-      .text(function(d, i){ return d})
+      .text(function(d, i){ return parseInt(d.data.value)/5})
       .attr("transform", function(d) { return "translate(" + arcGenerator.centroid(d) + ")";})
       .style("text-anchor", "middle")
       .style("font-size", 17)
