@@ -75,7 +75,6 @@ svg3.selectAll("rect")
     .attr("y",(d, i) => y3(i))
     .attr("x", (d) => function(d){ return x3(d)})
     .style("fill", function(d,i) {return countryColors[nations[i]]})
-    .transition().duration(1000).delay(500)
     .on("mouseover", function(d,i){tooltip3.style("opacity", 1)
           .style("left", (d3.event.pageX)+"px")
           .style("top", (d3.event.pageY)+"px")
@@ -84,5 +83,5 @@ svg3.selectAll("rect")
           "<br>" + "Race Starts: " + race_starts[i] + 
           "<br>" + "Pole Positions: " + pole_positions[i] +
           "<br>" + "Status: " + status[i]);})
-      .on("mouseleave", function() {tooltip3.style("opacity", 0)} )
+    .on("mouseleave", function() {tooltip3.style("opacity", 0)} )
 });
