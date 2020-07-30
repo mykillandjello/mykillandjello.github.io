@@ -76,12 +76,13 @@ d3.csv("data/constructors.csv", function(data) {
         .on("mouseleave", function() {tooltip2.style("opacity", 0)})
     
     // Now add the annotation. Use the centroid method to get the best coordinates
+    console.log(data_ready)
     svg2
       .selectAll('mySlices')
       .data(data_ready)
       .enter()
       .append('text')
-      .text(function(d){ return d.data.key})
+      .text(function(d, i){ return d})
       .attr("transform", function(d) { return "translate(" + arcGenerator.centroid(d) + ")";})
       .style("text-anchor", "middle")
       .style("font-size", 17)
