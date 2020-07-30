@@ -32,7 +32,7 @@ var titles = [];
 var constructors = [];
 var nations = [];
 var race_wins = [];
-var races_started = [];
+var race_starts = [];
 var pole_positions = [];
 var first_entry = [];
 for (i=0; i < data.length; i++) {
@@ -40,7 +40,7 @@ for (i=0; i < data.length; i++) {
   constructors.push(data[i].constructor)
   nations.push(data[i].nation)
   race_wins.push(data[i].race_wins)
-  races_started.push(data[i].races_started)
+  race_starts.push(data[i].race_starts)
   pole_positions.push(data[i].pole_positions)
   first_entry.push(data[i].first_entry)
 }
@@ -91,27 +91,25 @@ svg1.selectAll("rect")
     .attr("x",(d, i) => x1(i))
     .attr("y", function(d) {return y1(d)})
     .style("fill", function(d,i) {return countryColors[nations[i]]})
-  .transition().duration(3000).delay(1000)
   .on("mouseover", function(d,i){tooltip1.style("opacity", 1)
                                          .style("left", (d3.event.pageX)+"px")
                                          .style("top", (d3.event.pageY)+"px")
                                          .html("Country: " + nations[i] +
                                          "<br>" + "Race Wins: " + race_wins[i] +
-                                         "<br>" + "Races Started: " + races_started[i] + 
+                                         "<br>" + "Race Starts: " + race_starts[i] + 
                                          "<br>" + "Pole Positions: " + pole_positions[i] +
                                          "<br>" + "First Entry: " + first_entry[i]);})
   .on("mouseleave", function() {tooltip1.style("opacity", 0)} )
 
 // color legend
-svg1.append("circle").attr("cx",650).attr("cy",30).attr("r", 10).style("fill", "red")
-svg1.append("circle").attr("cx",650).attr("cy",60).attr("r", 10).style("fill", "blue")
-svg1.append("circle").attr("cx",650).attr("cy",90).attr("r", 10).style("fill", "teal")
-svg1.append("circle").attr("cx",650).attr("cy",120).attr("r", 10).style("fill", "orange")
-svg1.append("circle").attr("cx",650).attr("cy",150).attr("r", 10).style("fill", "green")
-svg1.append("text").attr("x", 670).attr("y", 30).text("Italy").style("font-size", "15px").attr("alignment-baseline","middle")
-svg1.append("text").attr("x", 670).attr("y", 60).text("United Kingdom").style("font-size", "15px").attr("alignment-baseline","middle")
-svg1.append("text").attr("x", 670).attr("y", 90).text("Germany").style("font-size", "15px").attr("alignment-baseline","middle")
-svg1.append("text").attr("x", 670).attr("y", 120).text("Austria").style("font-size", "15px").attr("alignment-baseline","middle")
-svg1.append("text").attr("x", 670).attr("y", 150).text("France").style("font-size", "15px").attr("alignment-baseline","middle")
-
+  svg1.append("circle").attr("cx",650).attr("cy",30).attr("r", 10).style("fill", "red")
+  svg1.append("circle").attr("cx",650).attr("cy",60).attr("r", 10).style("fill", "blue")
+  svg1.append("circle").attr("cx",650).attr("cy",90).attr("r", 10).style("fill", "teal")
+  svg1.append("circle").attr("cx",650).attr("cy",120).attr("r", 10).style("fill", "orange")
+  svg1.append("circle").attr("cx",650).attr("cy",150).attr("r", 10).style("fill", "green")
+  svg1.append("text").attr("x", 670).attr("y", 30).text("Italy").style("font-size", "15px").attr("alignment-baseline","middle")
+  svg1.append("text").attr("x", 670).attr("y", 60).text("United Kingdom").style("font-size", "15px").attr("alignment-baseline","middle")
+  svg1.append("text").attr("x", 670).attr("y", 90).text("Germany").style("font-size", "15px").attr("alignment-baseline","middle")
+  svg1.append("text").attr("x", 670).attr("y", 120).text("Austria").style("font-size", "15px").attr("alignment-baseline","middle")
+  svg1.append("text").attr("x", 670).attr("y", 150).text("France").style("font-size", "15px").attr("alignment-baseline","middle")
 });

@@ -6,6 +6,23 @@ d3.csv("data/constructors.csv", function(data) {
             my_dict[data[i].nation] = 0;
         my_dict[data[i].nation] = my_dict[data[i].nation] + parseInt(data[i].titles);
     }
+
+    var titles = [];
+    var constructors = [];
+    var nations = [];
+    var race_wins = [];
+    var races_started = [];
+    var pole_positions = [];
+    var first_entry = [];
+    for (i=0; i < data.length; i++) {
+      titles.push(data[i].titles)
+      constructors.push(data[i].constructor)
+      nations.push(data[i].nation)
+      race_wins.push(data[i].race_wins)
+      races_started.push(data[i].races_started)
+      pole_positions.push(data[i].pole_positions)
+      first_entry.push(data[i].first_entry)
+}
     
       // set the dimensions and margins of the graph
     var width = 600
@@ -52,11 +69,11 @@ d3.csv("data/constructors.csv", function(data) {
         .attr("stroke", "black")
         .style("stroke-width", "2px")
         .style("opacity", 1)
-        .on("mouseover", function(d,i){tooltip2.style("opacity", 1)
+        .on("mouseover", function(d){tooltip2.style("opacity", 1)
                                            .style("left", (d3.event.pageX)+"px")
                                            .style("top", (d3.event.pageY)+"px")
                                            .html(d.data.key);})
-        .on("mouseleave", function() {tooltip2.style("opacity", 0)} )
+        .on("mouseleave", function() {tooltip2.style("opacity", 0)})
     
     // Now add the annotation. Use the centroid method to get the best coordinates
     svg2
@@ -65,7 +82,7 @@ d3.csv("data/constructors.csv", function(data) {
       .enter()
       .append('text')
       .text(function(d){ return d.data.key})
-      .attr("transform", function(d) { return "translate(" + arcGenerator.centroid(d) + ")";  })
+      .attr("transform", function(d) { return "translate(" + arcGenerator.centroid(d) + ")";})
       .style("text-anchor", "middle")
       .style("font-size", 17)
     });

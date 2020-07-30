@@ -1,34 +1,34 @@
-driver,titles,nation
-Michael Schumacher,7,Germany
-Lewis Hamilton,6,United Kingdom
-Juan Manuel Fangio,5,Argentina
-Alain Prost,4,France
-Sebastian Vettel,4,Germany
-Jack Brabham,3,Australia
-Jackie Stewart,3,United Kingdom
-Niki Lauda,3,Austria
-Nelson Piquet,3,Brazil
-Ayrton Senna,3,Brazil
-Alberto Ascari,2,Italy
-Graham Hill,2,United Kingdom
-Jim Clark,2,United Kingdom
-Emerson Fittipaldi,2,Brazil
-Mika Hakkinen,2,Finland
-Fernando Alonso,2,Spain
-Giuseppe Farina,1,Italy
-Make Hawthorn,1,United Kingdom
-Phil Hill,1,USA
-John Surtees,1,United Kingdom
-Denny Hulme,1,Australia
-Jochen Rindt,1,Austria
-James Hunt,1,United Kingdom
-Mario Andretti,1,USA
-Jody Scheckter,1,South Africa
-Alan Jones,1,Australia
-Keke Rosberg,1,Finland
-Nigel Mansell,1,United Kingdom
-Damon Hill,1,United Kingdom
-Jacques Villeneuve,1,Canada
-Kimi Raikkonen,1,Finland
-Jenson Button,1,United Kingdom
-Nico Rosberg,1,Germany
+driver,titles,nation,race_wins,race_starts,pole_positions,status
+Michael Schumacher,7,Germany,91,306,68,retired
+Lewis Hamilton,6,United Kingdom,86,253,90,active
+Juan Manuel Fangio,5,Argentina,24,52,29,deceased
+Alain Prost,4,France,51,199,33,retired
+Sebastian Vettel,4,Germany,53,243,57,active
+Jack Brabham,3,Australia,14,126,13,retired
+Jackie Stewart,3,United Kingdom,27,99,17,retired
+Niki Lauda,3,Austria,25,171,24,deceased
+Nelson Piquet,3,Brazil,23,204,24,retired
+Ayrton Senna,3,Brazil,41,161,65,deceased
+Alberto Ascari,2,Italy,13,32,14,deceased
+Graham Hill,2,United Kingdom,14,176,13,deceased
+Jim Clark,2,United Kingdom,25,72,33,deceased
+Emerson Fittipaldi,2,Brazil,14,144,6,retired
+Mika Hakkinen,2,Finland,20,161,26,retired
+Fernando Alonso,2,Spain,32,311,22,retired
+Giuseppe Farina,1,Italy,5,33,5,deceased
+Mike Hawthorn,1,United Kingdom,3,45,4,deceased
+Phil Hill,1,USA,3,49,6,deceased
+John Surtees,1,United Kingdom,6,111,8,deceased
+Denny Hulme,1,Australia,8,112,1,deceased
+Jochen Rindt,1,Austria,6,60,10,deceased
+James Hunt,1,United Kingdom,10,92,14,deceased
+Mario Andretti,1,USA,12,128,18,retired
+Jody Scheckter,1,South Africa,10,112,3,retired
+Alan Jones,1,Australia,12,116,6,retired
+Keke Rosberg,1,Finland,5,114,5,retired
+Nigel Mansell,1,United Kingdom,31,187,32,retired
+Damon Hill,1,United Kingdom,22,115,20,retired
+Jacques Villeneuve,1,Canada,11,163,13,retired
+Kimi Raikkonen,1,Finland,21,315,18,active
+Jenson Button,1,United Kingdom,15,306,8,retired
+Nico Rosberg,1,Germany,23,206,30,retired

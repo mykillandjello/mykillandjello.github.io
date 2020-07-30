@@ -12,14 +12,22 @@ var svg3 = d3.select("#svg3")
 
 d3.csv("data/drivers.csv", function(data) {
 
-var titles = [];
-var drivers = [];
-var nations = [];
-for (i=0; i < data.length; i++) {
-  titles.push(data[i].titles)
-  drivers.push(data[i].driver)
-  nations.push(data[i].nation)
-}
+  var titles = [];
+  var drivers = [];
+  var nations = [];
+  var race_wins = [];
+  var race_starts = [];
+  var pole_positions = [];
+  var status = [];
+  for (i=0; i < data.length; i++) {
+    titles.push(data[i].titles)
+    drivers.push(data[i].driver)
+    nations.push(data[i].nation)
+    race_wins.push(data[i].race_wins)
+    race_starts.push(data[i].race_starts)
+    pole_positions.push(data[i].pole_positions)
+    status.push(data[i].status)
+  }
 
 var y3 = d3.scaleBand()
   .domain(d3.range(drivers.length))
@@ -67,9 +75,14 @@ svg3.selectAll("rect")
     .attr("y",(d, i) => y3(i))
     .attr("x", (d) => function(d){ return x3(d)})
     .style("fill", function(d,i) {return countryColors[nations[i]]})
+    .transition().duration(1000).delay(500)
     .on("mouseover", function(d,i){tooltip3.style("opacity", 1)
-                                         .style("left", (d3.event.pageX)+"px")
-                                         .style("top", (d3.event.pageY)+"px")
-                                         .html(nations[i]);})
+          .style("left", (d3.event.pageX)+"px")
+          .style("top", (d3.event.pageY)+"px")
+          .html("Country: " + nations[i] +
+          "<br>" + "Race Wins: " + race_wins[i] +
+          "<br>" + "Race Starts: " + race_starts[i] + 
+          "<br>" + "Pole Positions: " + pole_positions[i] +
+          "<br>" + "Status: " + status[i]);})
       .on("mouseleave", function() {tooltip3.style("opacity", 0)} )
 });
