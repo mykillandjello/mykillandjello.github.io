@@ -27,9 +27,10 @@ d3.csv("data/drivers.csv", function(data) {
     // var data = {a: 9, b: 20, c:30, d:8, e:12}
     
     // set the color scale
-    var color4 = d3.scaleOrdinal()
-      .domain(my_dict)
-      .range(d3.schemeCategory20);
+var nations = ["Italy", "United Kingdom", "Germany", "Austria", "France", "Argentina", "Australia", "Brazil", "Finland", "Spain", "USA", "South Africa", "Canada"]
+var colors = ["red", "blue", "green", "orange", "teal", "grey", "darkgreen", "pink", "violet", "slateblue", "purple", "yellow", "brown"];
+
+var colorScale = d3.scaleOrdinal().domain(nations).range(colors);
   
     // Compute the position of each group on the pie:
     var pie = d3.pie()
@@ -52,7 +53,7 @@ d3.csv("data/drivers.csv", function(data) {
       .enter()
       .append('path')
         .attr('d', arcGenerator)
-        .attr('fill', function(d){ return(color4(d.data.key)) })
+        .attr('fill', function(d){ return(colorScale(d.data.key)) })
         .attr("stroke", "black")
         .style("stroke-width", "2px")
         .style("opacity", 0.7)
@@ -80,14 +81,14 @@ d3.csv("data/drivers.csv", function(data) {
 
 // color legend
 var legend = svg4.selectAll(".legend")
-    .data(color4.domain())
+    .data(colorScale.domain())
     .enter()
     .append("g")
     .attr("class", "legend")
     .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
     
   legend.append("path")
-    .style("fill", function(d) { return color4(d); })
+    .style("fill", function(d) { return colorScale(d); })
     	.attr("d", function(d, i) { return d3.symbol().type(d3.symbolSquare).size(300)(); })
 	    .attr("transform", function(d, i) { 
     		return "translate(" + (width -360) + "," + -100 + ")";

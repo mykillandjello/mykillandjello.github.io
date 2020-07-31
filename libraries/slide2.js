@@ -7,10 +7,10 @@ d3.csv("data/constructors.csv", function(data) {
         my_dict[data[i].nation] = my_dict[data[i].nation] + parseInt(data[i].titles);
     }
     
-      // set the dimensions and margins of the graph
-      var width = 800
-      height = 600
-      margin = 50
+    // set the dimensions and margins of the graph
+    var width = 800
+    height = 600
+    margin = 50
     
     // The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
     var radius = Math.min(width, height) / 2 - margin
@@ -23,11 +23,12 @@ d3.csv("data/constructors.csv", function(data) {
       .append("g")
         .attr("transform", "translate(" + (width / 2) + "," + height / 2 + ")");
         
-    // set the color scale
-    var color2 = d3.scaleOrdinal()
-      .domain(my_dict)
-      .range(d3.schemeCategory20);
-    
+    var nations = ["Italy", "United Kingdom", "Germany", "Austria", "France"]
+    var colors = ["red", "blue", "green", "orange", "teal", "grey", "darkgreen", "pink", "violet", "slateblue", "purple", "yellow", "brown"];
+
+
+    var colorScale = d3.scaleOrdinal().domain(nations).range(colors);
+
     // Compute the position of each group on the pie:
     var pie = d3.pie()
       .value(function(d) { return d.value; })
@@ -51,7 +52,7 @@ d3.csv("data/constructors.csv", function(data) {
       .enter()
       .append('path')
         .attr('d', arcGenerator)
-        .attr('fill', function(d){ return(color2(d.data.key)) })
+        .attr('fill', function(d){ return(colorScale(d.data.key)) })
         .attr("stroke", "black")
         .style("stroke-width", "2px")
         .style("opacity", 1)
@@ -79,14 +80,14 @@ d3.csv("data/constructors.csv", function(data) {
 // color legend
 var clicked = ""
 var legend = svg2.selectAll(".legend")
-    .data(color2.domain())
+    .data(colorScale.domain())
     .enter()
     .append("g")
     .attr("class", "legend")
     .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
     
   legend.append("path")
-    .style("fill", function(d) { return color2(d); })
+    .style("fill", function(d) { return colorScale(d); })
     	.attr("d", function(d, i) { return d3.symbol().type(d3.symbolSquare).size(300)(); })
 	    .attr("transform", function(d, i) { 
     		return "translate(" + (width -360) + "," + -100 + ")";

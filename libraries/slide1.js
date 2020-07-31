@@ -12,41 +12,28 @@ var svg1 = d3.select("#svg1")
 
 d3.csv("data/constructors.csv", function(data) {
 
-var titles = [];
-var constructors = [];
-var nations = [];
-var race_wins = [];
-var race_starts = [];
-var pole_positions = [];
-var first_entry = [];
-for (i=0; i < data.length; i++) {
-  titles.push(data[i].titles)
-  constructors.push(data[i].constructor)
-  nations.push(data[i].nation)
-  race_wins.push(data[i].race_wins)
-  race_starts.push(data[i].race_starts)
-  pole_positions.push(data[i].pole_positions)
-  first_entry.push(data[i].first_entry)
-}
+//console.log(data[0]);
 
-var color1 = d3.scaleOrdinal(d3.schemeCategory20);
+var nations = ["Italy", "United Kingdom", "Germany", "Austria", "France"]
+var colors = ["red", "blue", "green", "orange", "teal", "grey", "darkgreen", "pink", "violet", "slateblue", "purple", "yellow", "brown"];
+
+    
+var colorScale = d3.scaleOrdinal().domain(nations).range(colors);
     
 var x1 = d3.scaleBand()
-  .domain(d3.range(constructors.length))
+  .domain(d3.range(data.length))
   .range([50,width+50])
   .padding(0.1)
 
 svg1.append("g")
     .attr("transform", "translate(0," + height + ")")
-    .call(d3.axisBottom(x1).tickFormat(function(d,i)  {return constructors[i]}));
+    .call(d3.axisBottom(x1).tickFormat(function(d,i)  {return data[i].constructor}));
 
 svg1.append("text")             
   .attr("transform",
         "translate(" + (width/2) + " ," + (height + 40) + ")")
   .style("text-anchor", "middle")
   .text("Constructor Name");
-
-// And apply this function to data to get the bins
 
 function isMatch(val1){
   var return_val = 0;
@@ -61,35 +48,35 @@ var y1 = d3.scaleLinear()
     .range([height, 0])
     .domain([0, 16]);
 
-svg1.selectAll("rect")
-    .data(titles)
-    .enter()
-    .append("line")
+svg1.append("g")
+    .attr("transform", "translate(50,0)")
+    .call(d3.axisLeft(y1));
+    
+for(i=0; i < data.length; i++){
+svg1.append("line")
     .style("stroke", "black")
     .style("stroke-dasharray", ("3, 3"))
-    .style("stroke-width", function(d,i) {return isMatch(nations[i])})
-    .attr("x1", function(d, i)  {return x1(i) + (x1.bandwidth() / 2)})
-    .attr("y1", function(d) {return y1(d)})
+    .style("stroke-width", isMatch(data[i].nation))
+    .attr("x1", x1(i) + (x1.bandwidth() / 2))
+    .attr("y1", y1(data[i].titles))
     .attr("x2", 400)
     .attr("y2", 200);
+}
+
 
 svg1.append("text")
     .attr("x",400)
     .attr("y",170)
     .style("text-anchor", "middle")
     .style("font-size","12px")
-    .text("British constructors have won")
+    .text("Ten of the fifteen teams to win")
     
 svg1.append("text")
     .attr("x",400)
     .attr("y", 190)
     .style("text-anchor", "middle")
     .style("font-size","12px")
-    .text("33 out of 70 championship titles")
-
-svg1.append("g")
-    .attr("transform", "translate(50,0)")
-    .call(d3.axisLeft(y1));
+    .text("a championship have been British")
 
 svg1.append("text")
     .attr("transform", "rotate(-90)")
@@ -103,35 +90,35 @@ var tooltip1 = d3.select("#tooltip1");
 
 // append the bar rectangles to the svg element
 svg1.selectAll("rect")
-  .data(titles)
+  .data(data)
   .enter()
   .append("rect")
     .attr("width", x1.bandwidth())
-    .attr("height", function(d){ return height - y1(d);})
+    .attr("height", function(d){ return height - y1(d.titles);})
     .attr("x", function(d, i) {return x1(i)})
-    .attr("y", function(d) {return y1(d)})
-    .style("fill", function(d,i) {return color1(nations[i])})
+    .attr("y", function(d) {return y1(d.titles)})
+    .style("fill", function(d,i) {return colorScale(d.nation)})
   .on("mouseover", function(d,i){tooltip1.style("opacity", 1)
                                          .style("left", (d3.event.pageX)+"px")
                                          .style("top", (d3.event.pageY)+"px")
-                                         .html("Country: " + nations[i] +
-                                         "<br>" + "Race Wins: " + race_wins[i] +
-                                         "<br>" + "Race Starts: " + race_starts[i] + 
-                                         "<br>" + "Pole Positions: " + pole_positions[i] +
-                                         "<br>" + "First Entry: " + first_entry[i]);})
+                                         .html("Country: " + d.nation +
+                                         "<br>" + "Race Wins: " + d.race_wins +
+                                         "<br>" + "Race Starts: " + d.race_starts + 
+                                         "<br>" + "Pole Positions: " + d.pole_positions +
+                                         "<br>" + "First Entry: " + d.first_entry);})
   .on("mouseleave", function() {tooltip1.style("opacity", 0)} );
 
 // color legend
 var clicked = ""
 var legend = svg1.selectAll(".legend")
-    .data(color1.domain())
+    .data(colorScale.domain())
     .enter()
     .append("g")
     .attr("class", "legend")
     .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
     
   legend.append("path")
-    .style("fill", function(d) { return color1(d); })
+    .style("fill", function(d) { return colorScale(d); })
     	.attr("d", function(d, i) { return d3.symbol().type(d3.symbolSquare).size(300)(); })
 	    .attr("transform", function(d, i) { 
     		return "translate(" + (width -10) + "," + 10 + ")";
@@ -142,7 +129,7 @@ var legend = svg1.selectAll(".legend")
    if (clicked !== d){
      d3.selectAll("rect")
        .filter(function(e, i){
-       return nations[i] !== d;
+       return e.nation != d;
      })
        .style("opacity",0.1)
      clicked = d
