@@ -28,7 +28,6 @@ var y3 = d3.scaleBand()
 svg3.append("g")
 .data(data)
 .attr("transform", "translate(125,0)")
-.attr("fake", function(d, i) {return console.log(i);})
 .call(d3.axisLeft(y3));
 
 // Y axis: scale and draw:
@@ -73,6 +72,20 @@ svg3.append("line")
     .attr("x2", 700)
     .attr("y2", 200);
 }
+    
+svg3.append("text")
+    .attr("x",805)
+    .attr("y",200)
+    .style("text-anchor", "middle")
+    .style("font-size","11px")
+    .text("Ten of the thirty-three drivers to")
+    
+svg3.append("text")
+    .attr("x",805)
+    .attr("y", 220)
+    .style("text-anchor", "middle")
+    .style("font-size","11px")
+    .text("win a championship have been British")
 
 var tooltip3 = d3.select("#tooltip3");
 

@@ -1,12 +1,11 @@
 d3.csv("data/drivers.csv", function(data) {
   
-    my_dict = {};
+    var my_dict = {};
     for(var i = 0; i < data.length; ++i) {
         if(!my_dict[data[i].nation])
             my_dict[data[i].nation] = 0;
-        ++my_dict[data[i].nation];
+        my_dict[data[i].nation] = my_dict[data[i].nation] + parseInt(data[i].titles);
     }
-    
       // set the dimensions and margins of the graph
       var width = 800
       height = 600
@@ -17,9 +16,6 @@ d3.csv("data/drivers.csv", function(data) {
     
     // append the svg object to the div called 'my_dataviz'
     var svg4 = d3.select("#svg4")
-      // .append("svg")
-      //   .attr("width", width)
-      //   .attr("height", height)
       .append("g")
         .attr("transform", "translate(" + (width / 2) + "," + height / 2 + ")");
     
@@ -47,6 +43,22 @@ var colorScale = d3.scaleOrdinal().domain(nations).range(colors);
       .cornerRadius(5)
     
     var tooltip4 = d3.select("#tooltip4");
+    
+    function highlightSelect(value){
+        var ret_val = "black";
+        if(value === "United Kingdom"){
+            ret_val = "gold";
+        }
+        return ret_val;
+    }
+    
+    function strokeSelect(value){
+        var ret_val = "2px";
+        if(value === "United Kingdom"){
+            ret_val = "6px";
+        }
+        return ret_val;
+    }
   
     svg4.selectAll('mySlices')
       .data(data_ready)
@@ -54,13 +66,15 @@ var colorScale = d3.scaleOrdinal().domain(nations).range(colors);
       .append('path')
         .attr('d', arcGenerator)
         .attr('fill', function(d){ return(colorScale(d.data.key)) })
-        .attr("stroke", "black")
-        .style("stroke-width", "2px")
+        .attr("stroke", function(d) {return highlightSelect(d.data.key)})
+        .style("stroke-width", function(d) {return strokeSelect(d.data.key)})
         .style("opacity", 0.7)
         .on("mouseover", function(d,i){tooltip4.style("opacity", 1)
                                            .style("left", (d3.event.pageX)+"px")
                                            .style("top", (d3.event.pageY)+"px")
-                                           .html(d.data.key);})
+                                           .html("Country: " + d.data.key +
+                                           "<br>" + "# of Championships: " + d.data.value +
+                                                "<br>" + "% of Championships: " +  Math.round(100 * parseInt(d.data.value)  / total) + "%");})
         .on("mouseleave", function() {tooltip4.style("opacity", 0)} )
 
     var total = 0;
@@ -74,7 +88,7 @@ var colorScale = d3.scaleOrdinal().domain(nations).range(colors);
       .data(data_ready)
       .enter()
       .append('text')
-      .text(function(d){ return Math.round(100 * parseInt(d.data.value)  / total) + "%"})
+      .text(function(d){ if(parseInt(d.data.value) > 3) {return Math.round(100 * parseInt(d.data.value)  / total) + "%"}})
       .attr("transform", function(d) { return "translate(" + arcGenerator.centroid(d) + ")";  })
       .style("text-anchor", "middle")
       .style("font-size", 17)
