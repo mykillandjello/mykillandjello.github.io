@@ -6,27 +6,10 @@ d3.csv("data/constructors.csv", function(data) {
             my_dict[data[i].nation] = 0;
         my_dict[data[i].nation] = my_dict[data[i].nation] + parseInt(data[i].titles);
     }
-
-    var titles = [];
-    var constructors = [];
-    var nations = [];
-    var race_wins = [];
-    var races_started = [];
-    var pole_positions = [];
-    var first_entry = [];
-    for (i=0; i < data.length; i++) {
-      titles.push(data[i].titles)
-      constructors.push(data[i].constructor)
-      nations.push(data[i].nation)
-      race_wins.push(data[i].race_wins)
-      races_started.push(data[i].races_started)
-      pole_positions.push(data[i].pole_positions)
-      first_entry.push(data[i].first_entry)
-}
     
       // set the dimensions and margins of the graph
-      var width = 700
-      height = 700
+      var width = 800
+      height = 600
       margin = 50
     
     // The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
@@ -38,12 +21,12 @@ d3.csv("data/constructors.csv", function(data) {
       //   .attr("width", width)
       //   .attr("height", height)
       .append("g")
-        .attr("transform", "translate(" + (width / 2 + radius / 2) + "," + height / 2 + ")");
+        .attr("transform", "translate(" + (width / 2) + "," + height / 2 + ")");
         
     // set the color scale
-    var color = d3.scaleOrdinal()
+    var color2 = d3.scaleOrdinal()
       .domain(my_dict)
-      .range(["red", "blue", "teal", "orange", "green"]);
+      .range(d3.schemeCategory20);
     
     // Compute the position of each group on the pie:
     var pie = d3.pie()
@@ -56,8 +39,8 @@ d3.csv("data/constructors.csv", function(data) {
       .innerRadius(radius - 150)
       .outerRadius(radius)
       .padAngle(.02)
-      .padRadius(100)
-      .cornerRadius(4)
+      .padRadius(200)
+      .cornerRadius(5)
     
     var tooltip2 = d3.select("#tooltip2");
   
@@ -68,7 +51,7 @@ d3.csv("data/constructors.csv", function(data) {
       .enter()
       .append('path')
         .attr('d', arcGenerator)
-        .attr('fill', function(d){ return(color(d.data.key)) })
+        .attr('fill', function(d){ return(color2(d.data.key)) })
         .attr("stroke", "black")
         .style("stroke-width", "2px")
         .style("opacity", 1)
@@ -93,14 +76,26 @@ d3.csv("data/constructors.csv", function(data) {
       .style("text-anchor", "middle")
       .style("font-size", 17)
 
-  svg2.append("circle").attr("cx",375).attr("cy",30).attr("r", 10).style("fill", "red")
-  svg2.append("circle").attr("cx",375).attr("cy",60).attr("r", 10).style("fill", "blue")
-  svg2.append("circle").attr("cx",375).attr("cy",90).attr("r", 10).style("fill", "teal")
-  svg2.append("circle").attr("cx",375).attr("cy",120).attr("r", 10).style("fill", "orange")
-  svg2.append("circle").attr("cx",375).attr("cy",150).attr("r", 10).style("fill", "green")
-  svg2.append("text").attr("x", 400).attr("y", 30).text("Italy").style("font-size", "15px").attr("alignment-baseline","middle")
-  svg2.append("text").attr("x", 400).attr("y", 60).text("United Kingdom").style("font-size", "15px").attr("alignment-baseline","middle")
-  svg2.append("text").attr("x", 400).attr("y", 90).text("Germany").style("font-size", "15px").attr("alignment-baseline","middle")
-  svg2.append("text").attr("x", 400).attr("y", 120).text("Austria").style("font-size", "15px").attr("alignment-baseline","middle")
-  svg2.append("text").attr("x", 400).attr("y", 150).text("France").style("font-size", "15px").attr("alignment-baseline","middle")
+// color legend
+var clicked = ""
+var legend = svg2.selectAll(".legend")
+    .data(color2.domain())
+    .enter()
+    .append("g")
+    .attr("class", "legend")
+    .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+    
+  legend.append("path")
+    .style("fill", function(d) { return color2(d); })
+    	.attr("d", function(d, i) { return d3.symbol().type(d3.symbolSquare).size(300)(); })
+	    .attr("transform", function(d, i) { 
+    		return "translate(" + (width -360) + "," + -100 + ")";
+  		})
+   
+  legend.append("text")
+      .attr("x", width - 374)
+      .attr("y", -100)
+      .attr("dy", ".35em")
+      .style("text-anchor", "end")
+      .text(function(d) { return d; });
   });

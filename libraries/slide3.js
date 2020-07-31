@@ -28,17 +28,17 @@ d3.csv("data/drivers.csv", function(data) {
     pole_positions.push(data[i].pole_positions)
     status.push(data[i].status)
   }
-    
-var color3 = d3.scaleOrdinal(d3.schemeCategory20c);
 
 var y3 = d3.scaleBand()
   .domain(d3.range(drivers.length))
   .range([0,height3])
   .padding(0.1)
 
-  svg3.append("g")
-    .attr("transform", "translate(125,0)")
-    .call(d3.axisLeft(y3).tickFormat(i => drivers[i]));
+var color3 = d3.scaleOrdinal(d3.schemeCategory20);
+
+svg3.append("g")
+.attr("transform", "translate(125,0)")
+.call(d3.axisLeft(y3).tickFormat(i => drivers[i]));
 
 // Y axis: scale and draw:
 var x3 = d3.scaleLinear()
@@ -98,7 +98,7 @@ var legend = svg3.selectAll(".legend")
     
   legend.append("path")
     .style("fill", function(d) { return color3(d); })
-    	.attr("d", function(d, i) { return d3.symbol().type(d3.symbolSquare).size(200)(); })
+    	.attr("d", function(d, i) { return d3.symbol().type(d3.symbolSquare).size(300)(); })
 	    .attr("transform", function(d, i) { 
     		return "translate(" + (width -10) + "," + 100 + ")";
   		})

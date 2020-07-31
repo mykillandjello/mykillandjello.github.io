@@ -29,7 +29,7 @@ for (i=0; i < data.length; i++) {
   first_entry.push(data[i].first_entry)
 }
 
-var color1 = d3.scaleOrdinal(d3.schemeCategory10);
+var color1 = d3.scaleOrdinal(d3.schemeCategory20);
     
 var x1 = d3.scaleBand()
   .domain(d3.range(constructors.length))
@@ -132,7 +132,7 @@ var legend = svg1.selectAll(".legend")
     
   legend.append("path")
     .style("fill", function(d) { return color1(d); })
-    	.attr("d", function(d, i) { return d3.symbol().type(d3.symbolSquare).size(200)(); })
+    	.attr("d", function(d, i) { return d3.symbol().type(d3.symbolSquare).size(300)(); })
 	    .attr("transform", function(d, i) { 
     		return "translate(" + (width -10) + "," + 10 + ")";
   		})
@@ -158,15 +158,4 @@ var legend = svg1.selectAll(".legend")
       .attr("dy", ".35em")
       .style("text-anchor", "end")
       .text(function(d) { return d; });
-//  svg1.append("circle").attr("cx",650).attr("cy",30).attr("r", 10).style("fill", "red")
-//  svg1.append("circle").attr("cx",650).attr("cy",60).attr("r", 10).style("fill", "blue")
-//  svg1.append("circle").attr("cx",650).attr("cy",90).attr("r", 10).style("fill", "teal")
-//  svg1.append("circle").attr("cx",650).attr("cy",120).attr("r", 10).style("fill", "orange")
-//  svg1.append("circle").attr("cx",650).attr("cy",150).attr("r", 10).style("fill", "green")
-//  svg1.append("text").attr("x", 670).attr("y", 30).text("Italy").style("font-size", "15px").attr("alignment-baseline","middle")
-//  svg1.append("text").attr("x", 670).attr("y", 60).text("United Kingdom").style("font-size", "15px").attr("alignment-baseline","middle")
-//  svg1.append("text").attr("x", 670).attr("y", 90).text("Germany").style("font-size", "15px").attr("alignment-baseline","middle")
-//  svg1.append("text").attr("x", 670).attr("y", 120).text("Austria").style("font-size", "15px").attr("alignment-baseline","middle")
-//  svg1.append("text").attr("x", 670).attr("y", 150).text("France").style("font-size", "15px").attr("alignment-baseline","middle")
-    
 });

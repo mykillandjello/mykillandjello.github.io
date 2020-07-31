@@ -8,8 +8,8 @@ d3.csv("data/drivers.csv", function(data) {
     }
     
       // set the dimensions and margins of the graph
-      var width = 700
-      height = 700
+      var width = 800
+      height = 600
       margin = 50
     
     // The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
@@ -21,15 +21,15 @@ d3.csv("data/drivers.csv", function(data) {
       //   .attr("width", width)
       //   .attr("height", height)
       .append("g")
-        .attr("transform", "translate(" + (width / 2 + radius / 2) + "," + height / 2 + ")");
+        .attr("transform", "translate(" + (width / 2) + "," + height / 2 + ")");
     
     // Create dummy data
     // var data = {a: 9, b: 20, c:30, d:8, e:12}
     
     // set the color scale
-    var color = d3.scaleOrdinal()
+    var color4 = d3.scaleOrdinal()
       .domain(my_dict)
-      .range(["red","blue","teal","orange","green","pink","purple","greenyellow","coral","firebrick","sandybrown","silver","cornflowerblue"]);
+      .range(d3.schemeCategory20);
   
     // Compute the position of each group on the pie:
     var pie = d3.pie()
@@ -42,8 +42,8 @@ d3.csv("data/drivers.csv", function(data) {
       .innerRadius(radius - 150)
       .outerRadius(radius)
       .padAngle(.02)
-      .padRadius(100)
-      .cornerRadius(4)
+      .padRadius(200)
+      .cornerRadius(5)
     
     var tooltip4 = d3.select("#tooltip4");
   
@@ -52,7 +52,7 @@ d3.csv("data/drivers.csv", function(data) {
       .enter()
       .append('path')
         .attr('d', arcGenerator)
-        .attr('fill', function(d){ return(color(d.data.key)) })
+        .attr('fill', function(d){ return(color4(d.data.key)) })
         .attr("stroke", "black")
         .style("stroke-width", "2px")
         .style("opacity", 0.7)
@@ -77,4 +77,26 @@ d3.csv("data/drivers.csv", function(data) {
       .attr("transform", function(d) { return "translate(" + arcGenerator.centroid(d) + ")";  })
       .style("text-anchor", "middle")
       .style("font-size", 17)
+
+// color legend
+var legend = svg4.selectAll(".legend")
+    .data(color4.domain())
+    .enter()
+    .append("g")
+    .attr("class", "legend")
+    .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+    
+  legend.append("path")
+    .style("fill", function(d) { return color4(d); })
+    	.attr("d", function(d, i) { return d3.symbol().type(d3.symbolSquare).size(300)(); })
+	    .attr("transform", function(d, i) { 
+    		return "translate(" + (width -360) + "," + -100 + ")";
+  		})
+   
+  legend.append("text")
+      .attr("x", width - 374)
+      .attr("y", -100)
+      .attr("dy", ".35em")
+      .style("text-anchor", "end")
+      .text(function(d) { return d; });
     });
