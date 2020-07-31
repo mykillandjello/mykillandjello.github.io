@@ -16,6 +16,12 @@ body {
     margin: auto;
   }
   
+img {
+    display: block;
+    height: auto;
+    width: auto;
+    border-radius: 8px;
+}
   /* Next & previous buttons */
   .prev, .next {
     cursor: pointer;

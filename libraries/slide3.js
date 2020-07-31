@@ -28,6 +28,8 @@ d3.csv("data/drivers.csv", function(data) {
     pole_positions.push(data[i].pole_positions)
     status.push(data[i].status)
   }
+    
+var color3 = d3.scaleOrdinal(d3.schemeCategory20c);
 
 var y3 = d3.scaleBand()
   .domain(d3.range(drivers.length))
@@ -74,7 +76,7 @@ svg3.selectAll("rect")
     .attr("width", function(d){ return x3(d) - 125;})
     .attr("y",(d, i) => y3(i))
     .attr("x", (d) => function(d){ return x3(d)})
-    .style("fill", function(d,i) {return countryColors[nations[i]]})
+    .style("fill", function(d,i) {return color3(nations[i])})
     .on("mouseover", function(d,i){tooltip3.style("opacity", 1)
           .style("left", (d3.event.pageX)+"px")
           .style("top", (d3.event.pageY)+"px")
@@ -84,4 +86,42 @@ svg3.selectAll("rect")
           "<br>" + "Pole Positions: " + pole_positions[i] +
           "<br>" + "Status: " + status[i]);})
     .on("mouseleave", function() {tooltip3.style("opacity", 0)} )
+    
+// color legend
+var clicked = ""
+var legend = svg3.selectAll(".legend")
+    .data(color3.domain())
+    .enter()
+    .append("g")
+    .attr("class", "legend")
+    .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+    
+  legend.append("path")
+    .style("fill", function(d) { return color3(d); })
+    	.attr("d", function(d, i) { return d3.symbol().type(d3.symbolSquare).size(200)(); })
+	    .attr("transform", function(d, i) { 
+    		return "translate(" + (width -10) + "," + 100 + ")";
+  		})
+  		.on("click",function(d){
+   svg3.selectAll("rect").style("opacity",1)
+   
+   if (clicked !== d){
+     svg3.selectAll("rect")
+       .filter(function(e, i){
+       return nations[i] !== d;
+     })
+       .style("opacity",0.1)
+     clicked = d
+   }
+    else{
+      clicked = ""
+    }
+  });
+ 
+  legend.append("text")
+      .attr("x", width - 24)
+      .attr("y", 100)
+      .attr("dy", ".35em")
+      .style("text-anchor", "end")
+      .text(function(d) { return d; });
 });
