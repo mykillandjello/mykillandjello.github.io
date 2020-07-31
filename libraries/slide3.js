@@ -1,12 +1,9 @@
-var margin3 = {top: 50, right: 200, bottom: 200, left: 200};
-var width3 = 1000 - margin.top - margin.bottom;
-var height3 = 800 - margin.left - margin.right;
+var margin3 = {top: 50, right: 200, bottom: 50, left: 200};
+var width3 = 1000 - margin.left - margin.right;
+var height3 = 800 - margin.bottom - margin.top;
 
 // append the svg object to the body of the page
 var svg3 = d3.select("#svg3")
-  // .append("svg")
-  //   .attr("width", width3 + margin3.left + margin3.right)
-  //   .attr("height", height3 + margin3.top + margin3.bottom)
   .append('g')
     .attr("transform", "translate(" + 0 + "," + margin3.top + ")");
 
